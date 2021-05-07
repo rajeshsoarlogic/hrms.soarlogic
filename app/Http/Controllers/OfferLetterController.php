@@ -230,10 +230,10 @@ class OfferLetterController extends Controller
     {
         $offerLetter = OfferLetter::with('stamp')->where('token', $token)->where('accepted',0)->first();
         $policies = Policy::get();
-        $signature = DigitalSignature::find($offerLetter->digital_signature_id);
         //dd($offerLetter->toArray());
 
         if($offerLetter != NULL){
+            $signature = DigitalSignature::find($offerLetter->digital_signature_id);
             return view('hrms.offerletter.accept', compact('offerLetter', 'signature', 'policies'));
         }else{
             return redirect()->route('login')->with('flash_message', 'Already signed the offerletter! login here now');

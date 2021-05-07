@@ -31,16 +31,16 @@
                     <p>Dear {{$offerLetter->name}}, </p>
                 </div>
                 <div class="col-md-12 offer">
-                    <p>{{strip_tags($offerLetter->description)}} </p>
+                    <p>{!! nl2br($offerLetter->description) !!}</p>
                 </div>
             </div>
 
             <div class="row pt">
                 <div class="col-md-12">
-                    <img src="{{ asset('storage/app/stamps/'.$offerLetter->stamp->picture) }}" class="img-thumbnail" width="100" />
+                    <img src="{{ asset('storage/app/stamps/'.$offerLetter->stamp->picture) }}" class="img-responsive" width="100" />
                 </div><br>
                 <div class="col-md-12">
-                    <img src="{{ asset('storage/app/signature/'.$signature->signature) }}" class="img-thumbnail" width="100" />
+                    <img src="{{ asset('storage/app/signature/'.$signature->signature) }}" class="img-responsive" width="100" />
                 </div>
             </div>
 
