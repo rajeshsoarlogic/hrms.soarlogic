@@ -44,7 +44,7 @@ Route::group(['middleware' => ['auth']], function ()
 
     Route::get('dashboard', ['as' => 'dashboard', 'uses' => 'AuthController@dashboard']);
 
-    Route::get('profile', 'ProfileController@show');
+    Route::get('profile', 'ProfileController@show')->name('profile');
 
     //Routes for add-employees
 

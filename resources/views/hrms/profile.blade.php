@@ -11,17 +11,15 @@
                     <div class="panel">
                         <div class="panel-heading text-center">
                             <span class="panel-title">{{isset($details->name)?$details->name:''}}</span>
+                            <a href="{{route('edit-emp', \Auth::user()->id)}}"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
                         </div>
                         <div class="panel-body pn pb5 text-center">
                             <hr class="short br-lighter">
-                            <img src="{{isset($details->photo) ? $details->photo : '/assets/img/avatars/profile_pic.png'}}" width="80px" height="80px" class="img-circle img-thumbnail" alt="User Image">
-
+                            <img src="{{isset($details->photo) ? asset('public/photos/'.$details->photo) : '/public/assets/img/avatars/profile_pic.png'}}" width="80px" height="80px" class="img-circle img-thumbnail" alt="User Image">
                         </div>
                         <p class="text-center no-margin">{{isset($details->userrole->role->name)?$details->userrole->role->name:''}}</p>
                         <p class="small text-center no-margin"><span class="text-muted">Department:</span> {{isset($details->department) ? $details->department:'' }}</p>
                         <p class="small text-center no-margin"><span class="text-muted">Employee ID:</span> {{isset($details->code) ? $details->code:''}}</p>
-
-
                     </div>
                 </div>
 
@@ -29,6 +27,7 @@
                     <div class="panel">
                         <div class="panel-heading">
                             <span class="panel-title">Bank Details</span>
+                            <a href="{{route('edit-emp', \Auth::user()->id)}}"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
                         </div>
                         <div class="panel-body pn pb5">
                             <hr class="short br-lighter">
@@ -66,8 +65,6 @@
                                     </tbody>
                                 </table>
                             </div>
-
-
                         </div>
                     </div>
                 </div>
@@ -79,13 +76,11 @@
 
                         <div class="panel-heading">
                             <span class="panel-title">Personal Details</span>
+                            <a href="{{route('edit-emp', \Auth::user()->id)}}"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
                         </div>
                         <div class="panel-body pn pb5">
                             <hr class="short br-lighter">
-
-
                             <div class="box-body no-padding">
-
                                 <table class="table">
                                     <tbody>
                                     <tr>
@@ -132,8 +127,6 @@
                                     </tr>
                                     </tbody>
                                 </table>
-
-
                             </div>
                         </div>
 
@@ -187,6 +180,7 @@
                     <div class="panel">
                         <div class="panel-heading">
                             <span class="panel-title">Employment Details</span>
+                            <a href="{{route('edit-emp', \Auth::user()->id)}}"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
                         </div>
                         <div class="panel-body pn pb5">
                             <hr class="short br-lighter">

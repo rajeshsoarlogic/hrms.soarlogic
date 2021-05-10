@@ -70,6 +70,9 @@
             .clear{
                 clear: both;
             }
+            .panel-body{
+                page-break-inside: auto;
+            }
         
         </style>
     </head>
@@ -87,12 +90,12 @@
 
                         <div class="panel-body">
                             {!! nl2br($data['offer_letter']) !!}
-                            <div style="width: 48%;">
+                            <div style="width: 48%; float:left; display: inline-block;">
                                 <p><img src="{{ asset('storage/app/stamps/'.$data['stamp_info']->picture) }}" class="img-thumbnail" width="100" /></p>
                                 <p><img src="{{ asset('storage/app/signature/'.$data['sig_info']->signature) }}" class="img-thumbnail" width="100" /></p>
                                 <p>Manager (HRM)</p>
                             </div>
-                            <div style="width: 48%;">
+                            <div style="width: 48%; float:right; display: inline-block;">
                             @if( isset($data['emp_sig_name']) )
                                 <p>
                                     <span>Employee sig:</span>
@@ -101,10 +104,10 @@
                             @endif
                             </div>
                         </div>
+                        <!-- <div class="col-md-12">
+                            <b>Soarlogic Information Technologies Pvt. Ltd.</b>
+                        </div> -->
                     </div>
-                </div>
-                <div class="col-md-12">
-                    <b>Soarlogic Information Technologies Pvt. Ltd.</b>
                 </div>
             </div>
         </div>

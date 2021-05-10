@@ -1,7 +1,7 @@
 <!-- -------------- Sidebar - Author -------------- -->
 <div class="sidebar-widget author-widget">
     <div class="media">
-        <a href="/profile" class="media-left">
+        <a href="{{route('profile')}}" class="media-left">
             @if(isset(Auth::user()->employee->photo))
                 <img src="{{asset('public/photos/'.Auth::user()->employee->photo)}}" width="40px" height="30px" class="img-responsive">
             @else
@@ -11,7 +11,7 @@
         </a>
 
         <div class="media-body">
-            <div class="media-author"><a href="/profile">{{Auth::user()->name}}</a></div>
+            <div class="media-author"><a href="{{route('profile')}}">{{Auth::user()->name}}</a></div>
         </div>
     </div>
 </div>
@@ -24,6 +24,16 @@
             <span class="sidebar-title">Dashboard</span>
         </a>
     </li>
+
+    @if(\Auth::user()->isEmployee())
+    <li>
+        <a href="{{route('profile')}}">
+            <span class="fa fa-user"></span>
+            <span class="sidebar-title"> My Profile </span>
+        </a>
+    </li>
+    @endif
+
     @if(\Auth::user()->isAdmin || \Auth::user()->isHR() || \Auth::user()->isManager())
         <li>
             <a class="accordion-toggle" href="/dashboard">
@@ -548,7 +558,6 @@
         </ul>
     </li>
 
-    {{--<li class="sidebar-label pt30"> Extras</li>--}}
     <li>
         <a href="/create-meeting">
             <span class="fa fa-calendar-o"></span>

@@ -81,7 +81,7 @@
             <p class="cinno">CIN No. U72300UR2009PTC032777</p>
         </header>
         <div class="container clear">
-            <table width="100%">
+            <table width="100%" class="bordered">
                 <tr>
                     <td valign="top">
                         <table class="bordered">
@@ -112,7 +112,6 @@
                         </table>
                     </td>
                 </tr>
-                <tr><td colspan="2"></tr>
                 <tr>
                     <td valign="top">
                         <table class="bordered">

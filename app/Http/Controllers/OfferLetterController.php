@@ -162,6 +162,7 @@ class OfferLetterController extends Controller
         $offerLetterInput = $request->all();
         $offerLetterInput['pdf_name'] = $pdf_name;
         $offerLetterInput['token'] = $token;
+        $offerLetterInput['accepted'] = 0;
         $offerLetter->update($offerLetterInput);
 
         $pdf_data["candidate_email"] = $request->email;
