@@ -153,7 +153,7 @@
 </div>
 </div>
     @push('scripts')
-        <script src="/assets/js/custom.js"></script>
-        <script src="/assets/js/function.js"></script>
+        <script src="{{ asset('/public/assets/js/custom.js') }}"></script>
+        <script src="{{ asset('/public/assets/js/function.js') }}"></script>
     @endpush
 @endsection

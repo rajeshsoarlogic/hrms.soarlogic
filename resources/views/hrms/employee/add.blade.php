@@ -439,7 +439,7 @@
                                                     @endforeach
                                                 </select>
                                                 @else
-                                                <select class="select2-single form-control" name="role" id="role">
+                                                <select class="select2-single form-control" name="role" id="role" required>
                                                     <option value="">Select role</option>
                                                     @foreach($roles as $role)
                                                         <option value="{{$role->id}}">{{$role->name}}</option>

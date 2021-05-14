@@ -102,15 +102,21 @@
 
                                             <div class="form-group">
                                                 <label for="da" class="col-md-2 control-label"> DA </label>
-                                                <div class="col-md-10">
-                                                    <input type="number" name="da" id="da" class="form-control" placeholder="DA" required>
+                                                <div class="col-md-5">
+                                                    <input type="number" name="da" id="da" class="form-control" placeholder="DA % i.e 5 % of Basic" required readonly="true">
+                                                </div>
+                                                <div class="col-md-5">
+                                                    <span id="da_basic" class="form-control"></span>
                                                 </div>
                                             </div>
 
                                             <div class="form-group">
                                                 <label for="hra" class="col-md-2 control-label"> HRA </label>
-                                                <div class="col-md-10">
-                                                    <input type="number" name="hra" id="hra" class="form-control" placeholder="HRA" required>
+                                                <div class="col-md-5">
+                                                    <input type="number" name="hra" id="hra" class="form-control" placeholder="HRA" required readonly="true">
+                                                </div>
+                                                <div class="col-md-5">
+                                                    <span id="hra_basic" class="form-control"></span>
                                                 </div>
                                             </div>
 
@@ -185,3 +191,47 @@
 
 </div>
 @endsection
+
+@push('scripts')
+    <script type="text/javascript">
+    $(document).ready(function(){
+        $('#basic').on('blur', function(){
+            var basicPay = $(this).val();
+            if(basicPay != ""){
+                $("#da").attr('readonly', false);
+                $("#hra").attr('readonly', false);
+            }else{
+                $("#da").attr('readonly', true);
+                $("#da").val("");
+                $("#da_basic").val('');
+                
+                $("#hra").attr('readonly', true);
+                $("#hra").val("");
+                $("#hra_basic").val('');
+            }
+        });
+
+        /*Get DA of Basic Pay*/
+        $('#da').on('blur', function(){
+            var daVal = $(this).val();
+            if(daVal != ""){
+                var basicVal = $("#basic").val();
+                $("#da_basic").text(`${daVal}% of ${basicVal} = ${(daVal*basicVal)/100}`);
+            }else{
+                $("#da_basic").html('');
+            }
+        });
+
+        /*Get HRA of Basic Pay*/
+        $('#hra').on('blur', function(){
+            var hraVal = $(this).val();
+            if(hraVal != ""){
+                var basicVal = $("#basic").val();
+                $("#hra_basic").text(`${hraVal}% of ${basicVal} = ${(hraVal*basicVal)/100}`);
+            }else{
+                $("#hra_basic").html('');
+            }
+        });
+    });
+    </script>
+@endpush

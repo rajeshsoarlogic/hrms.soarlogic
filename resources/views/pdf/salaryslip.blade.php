@@ -79,6 +79,10 @@
         </style>
     </head>
     <body>
+        @php
+        $da_basic_prcnt = ($request->da*$request->basic)/100;
+        $hra_basic_prcnt = ($request->hra*$request->basic)/100;
+        @endphp
         <header class="clear">
             <img src="{{asset('public/assets/img/Logo.png')}}" width="150" alt="Logo"/>
             <p class="slogan">Think Differently We Will Make The Difference</p>
@@ -129,11 +133,11 @@
                             </tr>
                             <tr>
                                 <td>DA</td>
-                                <td>{{$request->da}}</td>
+                                <td>{{$da_basic_prcnt}}</td>
                             </tr>
                             <tr>
                                 <td>HRA</td>
-                                <td>{{$request->hra}}</td>
+                                <td>{{$hra_basic_prcnt}}</td>
                             </tr>
                             <tr>
                                 <td>Conveyance Allowance</td>
@@ -181,7 +185,7 @@
                                 <th>Gross Earnings</th>
                                 <td>
                                 @php
-                                $gross_earnings = $request->basic + $request->da + $request->hra + $request->conveyance_allow + $request->education_allow + $request->medical_allow + $request->internet_allow + $request->special_allow;
+                                $gross_earnings = $request->basic + $da_basic_prcnt + $hra_basic_prcnt + $request->conveyance_allow + $request->education_allow + $request->medical_allow + $request->internet_allow + $request->special_allow;
                                 @endphp
                                 {{$gross_earnings}}
                                 </td>

@@ -34,7 +34,7 @@ class SalaryslipController extends Controller
         $emps = User::whereHas('role', function ($q) {
             $q->whereNotIn('role_id', [1,2]);
         })->with('employee')->get();
-        //dd($emp->toArray());
+        //dd($emps->toArray());
         return view('hrms.salaryslip.add', compact('emps'));
     }
 
@@ -71,10 +71,10 @@ class SalaryslipController extends Controller
 
         $slipInput = $request->all();
         $slipInput['pdf_name'] = $pdf_name;
-        Salaryslip::create($slipInput);
+        $salaryslip = Salaryslip::create($slipInput);
 
         // Send data to the view using loadView function of PDF facade
-        $pdf = PDF::loadView('pdf.salaryslip', ['request' => $request]);
+        $pdf = PDF::loadView('pdf.salaryslip', ['request' => $salaryslip]);
         Storage::put("salaryslip/$pdf_name", $pdf->output());
 
         return redirect()->route('salaryslip.create')->with('flash_message', 'Salaryslip successfully added!');
