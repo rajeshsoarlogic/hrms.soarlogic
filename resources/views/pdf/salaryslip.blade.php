@@ -71,6 +71,10 @@
             .bordered tr td, .bordered tr th {
                 border: 1px solid #c4c2c2;
             }
+            tr.borderless td{
+                border: 0px;
+                padding: 10px 0px;
+            }
         
         </style>
     </head>
@@ -81,10 +85,10 @@
             <p class="cinno">CIN No. U72300UR2009PTC032777</p>
         </header>
         <div class="container clear">
-            <table width="100%" class="bordered">
+            <table width="100%" class="bordered" cellpadding="0">
                 <tr>
                     <td valign="top">
-                        <table class="bordered">
+                        <table width="100%" class="bordered" cellpadding="0">
                             <tr>
                                 <td>Employee Name</td>
                                 <td>{{$request->employee->name}}</td>
@@ -100,7 +104,7 @@
                         </table>
                     </td>
                     <td valign="top">
-                        <table class="bordered">
+                        <table width="100%" class="bordered" cellpadding="0">
                             <tr>
                                 <td>PAN</td>
                                 <td>{{$request->pan}}</td>
@@ -112,9 +116,10 @@
                         </table>
                     </td>
                 </tr>
+                <tr class="borderless" colspan="2"><td></td></tr>
                 <tr>
                     <td valign="top">
-                        <table class="bordered">
+                        <table width="100%" class="bordered" cellpadding="0">
                             <tr>
                                 <th colspan="2">Earnings</th>
                             </tr>
@@ -153,7 +158,7 @@
                         </table>
                     </td>
                     <td valign="top">
-                        <table class="bordered">
+                        <table width="100%" class="bordered" cellpadding="0">
                             <tr>
                                 <th colspan="2">Deductions</th>
                             </tr>
@@ -168,9 +173,10 @@
                         </table>
                     </td>
                 </tr>
+                <tr class="borderless" colspan="2"><td></td></tr>
                 <tr>
                     <td valign="top">
-                        <table class="bordered">
+                        <table width="100%" class="bordered" cellpadding="0">
                             <tr>
                                 <th>Gross Earnings</th>
                                 <td>
@@ -183,7 +189,7 @@
                         </table>
                     </td>
                     <td valign="top">
-                        <table class="bordered">
+                        <table width="100%" class="bordered" cellpadding="0">
                             <tr>
                                 <th>Total Deduction</th>
                                 <td>
