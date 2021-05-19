@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Salaryslip;
 use App\User;
+use App\Models\Role;
 use PDF;
 
 use Illuminate\Http\Request;
@@ -34,8 +35,9 @@ class SalaryslipController extends Controller
         $emps = User::whereHas('role', function ($q) {
             $q->whereNotIn('role_id', [1,2]);
         })->with('employee')->get();
-        //dd($emps->toArray());
-        return view('hrms.salaryslip.add', compact('emps'));
+        $roles = Role::get();
+        //dd($roles->toArray());
+        return view('hrms.salaryslip.add', compact('emps', 'roles'));
     }
 
     /**
@@ -53,7 +55,7 @@ class SalaryslipController extends Controller
             'department' => 'required',
             'month_year' => 'required',
             'pan' => 'required',
-            'designation' => 'required',
+            'role_id' => 'required',
             'basic' => 'required',
             'da' => 'required',
             'hra' => 'required',
@@ -72,9 +74,10 @@ class SalaryslipController extends Controller
         $slipInput = $request->all();
         $slipInput['pdf_name'] = $pdf_name;
         $salaryslip = Salaryslip::create($slipInput);
+        $designation = Role::find($salaryslip->role_id);
 
         // Send data to the view using loadView function of PDF facade
-        $pdf = PDF::loadView('pdf.salaryslip', ['request' => $salaryslip]);
+        $pdf = PDF::loadView('pdf.salaryslip', ['request' => $salaryslip, 'designation' => $designation]);
         Storage::put("salaryslip/$pdf_name", $pdf->output());
 
         return redirect()->route('salaryslip.create')->with('flash_message', 'Salaryslip successfully added!');
@@ -102,8 +105,9 @@ class SalaryslipController extends Controller
         $emps = User::whereHas('role', function ($q) {
             $q->whereNotIn('role_id', [1,2]);
         })->with('employee')->get();
+        $roles = Role::get();
         //dd($salaryslip->toArray());
-        return view('hrms.salaryslip.edit', compact('salaryslip', 'emps'));
+        return view('hrms.salaryslip.edit', compact('salaryslip', 'emps', 'roles'));
     }
 
     /**
@@ -122,7 +126,7 @@ class SalaryslipController extends Controller
             'department' => 'required',
             'month_year' => 'required',
             'pan' => 'required',
-            'designation' => 'required',
+            'role_id' => 'required',
             'basic' => 'required',
             'da' => 'required',
             'hra' => 'required',
@@ -139,12 +143,13 @@ class SalaryslipController extends Controller
         $salaryslip->update($slipInput);
 
         $salaryslip = Salaryslip::with('employee')->find($salaryslip->id);
+        $designation = Role::find($salaryslip->role_id);
 
         $pdf_name = $salaryslip->pdf_name;
         Storage::delete("salaryslip/".$salaryslip->pdf_name);
 
         // Send data to the view using loadView function of PDF facade
-        $pdf = PDF::loadView('pdf.salaryslip', ['request' => $salaryslip]);
+        $pdf = PDF::loadView('pdf.salaryslip', ['request' => $salaryslip, 'designation' => $designation]);
         Storage::put("salaryslip/$pdf_name", $pdf->output());
 
         return redirect()->route('salaryslip.edit', $salaryslip->id)->with('flash_message', 'Salaryslip successfully updated!');

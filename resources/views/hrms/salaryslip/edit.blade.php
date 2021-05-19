@@ -59,13 +59,17 @@
                                         <div class="form-group">
                                             <label for="department" class="col-md-2 control-label"> Department </label>
                                             <div class="col-md-10">
-                                                <input type="text" name="department" id="department" value="{{$salaryslip->department}}" class="form-control" placeholder="Department" required>
+                                                <select name="department" id="department" class="form-control" required>
+                                                    <option value="">--- SELECT ---</option>
+                                                    <option value="hr" @if($salaryslip->department == 'hr') selected @endif>HR</option>
+                                                    <option value="finance" @if($salaryslip->department == 'finance') selected @endif>Finance</option>
+                                                </select>
                                             </div>
                                         </div>
 
                                         <div class="form-group">
                                             <label for="month_year" class="col-md-2 control-label"> Month Year </label>
-                                            <div class="col-md-10">
+                                            <div class="col-md-5">
                                                 <input type="date" name="month_year" id="month_year" value="{{$salaryslip->month_year}}" class="form-control" placeholder="Month Year" required>
                                             </div>
                                         </div>
@@ -78,9 +82,14 @@
                                         </div>
 
                                         <div class="form-group">
-                                            <label for="designation" class="col-md-2 control-label"> Designation </label>
+                                            <label for="role_id" class="col-md-2 control-label"> Designation </label>
                                             <div class="col-md-10">
-                                                <input type="text" name="designation" id="designation" value="{{$salaryslip->designation}}" class="form-control" placeholder="Designation" required>
+                                                <select name="role_id" id="role_id" class="form-control" required>
+                                                    <option value="">--- SELECT ---</option>
+                                                    @foreach($roles as $role)
+                                                        <option value="{{$role->id}}" @if($salaryslip->designation == $role->id) selected @endif>{{$role->name}}</option>
+                                                    @endforeach
+                                                </select>
                                             </div>
                                         </div>
 

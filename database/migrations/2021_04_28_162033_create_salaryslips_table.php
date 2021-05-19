@@ -19,7 +19,7 @@ class CreateSalaryslipsTable extends Migration
             $table->string('department')->nullable();
             $table->date('month_year')->nullable();
             $table->string('pan')->nullable();
-            $table->string('designation')->nullable();
+            $table->integer('role_id')->nullable();
             $table->integer('basic')->nullable();
             $table->integer('da')->nullable();
             $table->integer('hra')->nullable();

@@ -56,6 +56,7 @@
                                         <th class="text-center">Exp (in yrs)</th>
                                         <th class="text-center">Skill</th>
                                         <th class="text-center">Date</th>
+                                        <th class="text-center">CV</th>
                                         <th class="text-center">Action</th>
                                     </tr>
                                     </thead>
@@ -80,6 +81,11 @@
                                                 @endforeach
                                             </td>
                                             <td class="text-center">{{ $recruiter->created_at->format('d-M-Y') }}</td>
+                                            <td class="text-center">
+                                                <a href="{{asset('storage/app/recruiter/resume/'.$recruiter->resume)}}" target="_blank">
+                                                    <i class="fa fa-eye"></i>
+                                                </a>
+                                            </td>
                                             <td class="text-center">
                                                 <div class="btn-group text-right">
                                                     <button type="button" class="btn btn-success br2 btn-xs fs12 dropdown-toggle" data-toggle="dropdown" aria-expanded="false"> Action

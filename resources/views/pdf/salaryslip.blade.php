@@ -115,7 +115,7 @@
                             </tr>
                             <tr>
                                 <td>Designation</td>
-                                <td>{{$request->designation}}</td>
+                                <td>{{$designation->name}}</td>
                             </tr>
                         </table>
                     </td>

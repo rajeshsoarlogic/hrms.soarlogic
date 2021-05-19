@@ -119,7 +119,7 @@
                         <div class="row pv10">
                             <div class="col-xs-5 ph10"><img src="{{ asset('/public/assets/img/pages/clipart6.png') }}" class="img-responsive mauto" alt=""/></div>
                             <div class="col-xs-7 pl5">
-                                <h3 class="text-muted"><a href="{{route('hr-policy')}}"> HR POLICIES </a></h3>
+                                <h3 class="text-muted"><a href="{{route('policy.policies')}}"> HR POLICIES </a></h3>
                             </div>
                         </div>
                     </div>
