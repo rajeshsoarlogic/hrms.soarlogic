@@ -106,6 +106,12 @@ Route::group(['middleware' => ['auth']], function ()
     //Routes for salaryslip
     Route::resource('salaryslip', 'SalaryslipController');
 
+    //Routes for Appraisal
+    Route::resource('appraisal', 'AppraisalController');
+
+    //Routes for department
+    Route::resource('department', 'DepartmentController');
+
     //Routes for company details
     Route::resource('company-detail', 'CompanyDetailController');
 

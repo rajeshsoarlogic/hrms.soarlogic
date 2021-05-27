@@ -107,6 +107,38 @@
 
         <li>
             <a class="accordion-toggle" href="/dashboard">
+                <span class="fa fa-newspaper-o"></span>
+                <span class="sidebar-title">Appraisal Letter</span>
+                <span class="caret"></span>
+            </a>
+            <ul class="nav sub-nav">
+                <li>
+                    <a href="{{route('appraisal.create')}}"><span class="glyphicon glyphicon-tags"></span> Add Appraisal Letter </a>
+                </li>
+                <li>
+                    <a href="{{route('appraisal.index')}}"><span class="glyphicon glyphicon-tags"></span> Appraisal Letter Listing </a>
+                </li>
+            </ul>
+        </li>
+
+        <li>
+            <a class="accordion-toggle" href="/dashboard">
+                <span class="fa fa-newspaper-o"></span>
+                <span class="sidebar-title">Department</span>
+                <span class="caret"></span>
+            </a>
+            <ul class="nav sub-nav">
+                <li>
+                    <a href="{{route('department.create')}}"><span class="glyphicon glyphicon-tags"></span> Add Department </a>
+                </li>
+                <li>
+                    <a href="{{route('department.index')}}"><span class="glyphicon glyphicon-tags"></span> Department Listing </a>
+                </li>
+            </ul>
+        </li>
+
+        <li>
+            <a class="accordion-toggle" href="/dashboard">
                 <span class="fa fa-paint-brush"></span>
                 <span class="sidebar-title">Digital Signature</span>
                 <span class="caret"></span>
