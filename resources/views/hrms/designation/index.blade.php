@@ -16,9 +16,9 @@
                     <a href="/dashboard"> Dashboard </a>
                 </li>
                 <li class="breadcrumb-link">
-                    <a href=""> Department </a>
+                    <a href=""> Designation </a>
                 </li>
-                <li class="breadcrumb-current-item"> Department Listings </li>
+                <li class="breadcrumb-current-item"> Designation Listings </li>
             </ol>
         </div>
     </header>
@@ -35,7 +35,7 @@
                     <div class="box box-success">
                     <div class="panel">
                         <div class="panel-heading">
-                            <span class="panel-title hidden-xs"> Department Lists </span>
+                            <span class="panel-title hidden-xs"> Designation Lists </span>
                         </div>
                         <div class="panel-body pn">
                             @if(Session::has('flash_message'))
@@ -54,10 +54,10 @@
                                     </thead>
                                     <tbody>
                                     <?php $i =0;?>
-                                    @foreach($departments as $dept)
+                                    @foreach($designations as $desig)
                                         <tr>
                                             <td class="text-center">{{$i+=1}}</td>
-                                            <td class="text-center">{{$dept->title}}</td>
+                                            <td class="text-center">{{$desig->title}}</td>
                                             <td class="text-center">
                                                 <div class="btn-group text-right">
                                                     <button type="button" class="btn btn-success br2 btn-xs fs12 dropdown-toggle" data-toggle="dropdown" aria-expanded="false"> Action
@@ -65,13 +65,13 @@
                                                     </button>
                                                     <ul class="dropdown-menu" role="menu">
                                                         <li>
-                                                            <a href="{{ route('department.edit', $dept->id) }}">Edit</a>
+                                                            <a href="{{ route('designation.edit', $desig->id) }}">Edit</a>
                                                         </li>
                                                         <li>
-                                                            <form id="del-dept-{{$dept->id}}" action="{{ route('department.destroy', [ 'id'=> $dept->id ]) }}" method="POST" >
+                                                            <form id="del-desig-{{$desig->id}}" action="{{ route('designation.destroy', [ 'id'=> $desig->id ]) }}" method="POST" >
                                                                 {{ csrf_field() }}
                                                                 {{ method_field('DELETE') }}
-                                                                <input type="submit" name="del-dept-btn" value="Delete" class="form-control" />
+                                                                <input type="submit" name="del-desig-btn" value="Delete" class="form-control" />
                                                             </form>
                                                         </li>
                                                     </ul>
@@ -80,7 +80,7 @@
                                         </tr>
                                     @endforeach
                                     <tr>
-                                        {!! $departments->render() !!}
+                                        {!! $designations->render() !!}
                                     </tr>
                                     </tbody>
                                 </table>

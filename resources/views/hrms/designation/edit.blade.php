@@ -24,9 +24,9 @@
                     <a href="/dashboard"> Dashboard </a>
                 </li>
                 <li class="breadcrumb-link">
-                    <a href=""> Department </a>
+                    <a href=""> Designation </a>
                 </li>
-                <li class="breadcrumb-current-item"> Edit Department </li>
+                <li class="breadcrumb-current-item"> Edit Designation </li>
             </ol>
         </div>
     </header>
@@ -39,7 +39,7 @@
                     <div class="box box-success">
                         <div class="panel">
                             <div class="panel-heading">
-                                <span class="panel-title hidden-xs"> Add Department </span>
+                                <span class="panel-title hidden-xs"> Add Designation </span>
                             </div>
 
                             <div class="panel-body pn">
@@ -60,21 +60,21 @@
                                                 {{ Session::get('flash_message') }}
                                             </div>
                                         @endif
-                                        {!! Form::open(['class' => 'form-horizontal', 'url' => route('department.update', $department->id), 'method' => 'put']) !!}
+                                        {!! Form::open(['class' => 'form-horizontal', 'url' => route('designation.update', $designation->id), 'method' => 'put']) !!}
                                             <div class="form-group">
                                                 <label class="col-md-2 control-label"> Title </label>
                                                 <div class="col-md-10">
-                                                    <input type="text" name="title" id="title" value="{{$department->title}}" class="form-control" placeholder="Title">
+                                                    <input type="text" name="title" id="title" value="{{$designation->title}}" class="form-control" placeholder="Title">
                                                 </div>
                                             </div>
 
                                             <div class="form-group">
                                                 <label class="col-md-2 control-label"></label>
                                                 <div class="col-md-2">
-                                                    <input type="submit" class="btn btn-bordered btn-info btn-block save-department-btn" id="save-department-btn" value="Submit">
+                                                    <input type="submit" class="btn btn-bordered btn-info btn-block save-designation-btn" id="save-designation-btn" value="Submit">
                                                 </div>
                                                 <div class="col-md-2">
-                                                    <a class="btn btn-bordered btn-success btn-block" href="{{route('department.index')}}">Cancel</a>
+                                                    <a class="btn btn-bordered btn-success btn-block" href="{{route('designation.index')}}">Cancel</a>
                                                 </div>
                                             </div>
                                         {!! Form::close() !!}

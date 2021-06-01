@@ -112,6 +112,9 @@ Route::group(['middleware' => ['auth']], function ()
     //Routes for department
     Route::resource('department', 'DepartmentController');
 
+    //Routes for designation
+    Route::resource('designation', 'DesignationController');
+
     //Routes for company details
     Route::resource('company-detail', 'CompanyDetailController');
 

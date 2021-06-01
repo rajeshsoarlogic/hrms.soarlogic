@@ -139,6 +139,22 @@
 
         <li>
             <a class="accordion-toggle" href="/dashboard">
+                <span class="fa fa-newspaper-o"></span>
+                <span class="sidebar-title">Designation</span>
+                <span class="caret"></span>
+            </a>
+            <ul class="nav sub-nav">
+                <li>
+                    <a href="{{route('designation.create')}}"><span class="glyphicon glyphicon-tags"></span> Add Designation </a>
+                </li>
+                <li>
+                    <a href="{{route('designation.index')}}"><span class="glyphicon glyphicon-tags"></span> Designation Listing </a>
+                </li>
+            </ul>
+        </li>
+
+        <li>
+            <a class="accordion-toggle" href="/dashboard">
                 <span class="fa fa-paint-brush"></span>
                 <span class="sidebar-title">Digital Signature</span>
                 <span class="caret"></span>

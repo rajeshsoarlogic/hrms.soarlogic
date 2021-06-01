@@ -24,9 +24,9 @@
                     <a href="/dashboard"> Dashboard </a>
                 </li>
                 <li class="breadcrumb-link">
-                    <a href=""> Department </a>
+                    <a href=""> Designation </a>
                 </li>
-                <li class="breadcrumb-current-item"> Add Department </li>
+                <li class="breadcrumb-current-item"> Add Designation </li>
             </ol>
         </div>
     </header>
@@ -39,7 +39,7 @@
                     <div class="box box-success">
                         <div class="panel">
                             <div class="panel-heading">
-                                <span class="panel-title hidden-xs"> Add Department </span>
+                                <span class="panel-title hidden-xs"> Add Designation </span>
                             </div>
 
                             <div class="panel-body pn">
@@ -60,7 +60,7 @@
                                                 {{ Session::get('flash_message') }}
                                             </div>
                                         @endif
-                                        {!! Form::open(['class' => 'form-horizontal', 'url' => route('department.store'), 'method' => 'post']) !!}
+                                        {!! Form::open(['class' => 'form-horizontal', 'url' => route('designation.store'), 'method' => 'post']) !!}
                                             <div class="form-group">
                                                 <label class="col-md-2 control-label"> Title </label>
                                                 <div class="col-md-10">
@@ -71,10 +71,10 @@
                                             <div class="form-group">
                                                 <label class="col-md-2 control-label"></label>
                                                 <div class="col-md-2">
-                                                    <input type="submit" class="btn btn-bordered btn-info btn-block save-department-btn" id="save-department-btn" value="Submit">
+                                                    <input type="submit" class="btn btn-bordered btn-info btn-block save-designation-btn" id="save-designation-btn" value="Submit">
                                                 </div>
                                                 <div class="col-md-2">
-                                                    <a class="btn btn-bordered btn-success btn-block" href="{{route('department.index')}}">Cancel</a>
+                                                    <a class="btn btn-bordered btn-success btn-block" href="{{route('designation.index')}}">Cancel</a>
                                                 </div>
                                             </div>
                                         {!! Form::close() !!}
