@@ -27,7 +27,7 @@
         <!-- -------------- Content -------------- -->
         <section id="content" class="table-layout animated fadeIn" >
             <!-- -------------- Column Center -------------- -->
-            <div class="chute-affix" data-spy="affix" data-offset-top="200">
+            <div class="chute-affix" data-spy="" data-offset-top="200">
                 <div class="row">
                     <div class="col-xs-12">
                         <div class="box box-success">
@@ -39,12 +39,22 @@
                             <div class="panel-body pn">
                                 <div class="table-responsive">
                                     <div class="panel-body p25 pb10">
+                                        @if ($errors->any())
+                                            <div class="alert alert-danger">
+                                                <ul>
+                                                    @foreach ($errors->all() as $error)
+                                                        <li>{{ $error }}</li>
+                                                    @endforeach
+                                                </ul>
+                                            </div>
+                                        @endif
+
                                         @if(Session::has('flash_message'))
                                             <div class="alert alert-success">
                                                 {{Session::get('flash_message')}}
                                             </div>
                                         @endif
-                                        {!! Form::open(['class' => 'form-horizontal']) !!}
+                                        {!! Form::open(['class' => 'form-horizontal createForm']) !!}
                                         <div class="form-group">
                                             <label class="col-md-3 control-label"> Select Employee </label>
                                             <div class="col-md-6">
@@ -58,46 +68,43 @@
                                             </div>
                                         </div>
 
-                                            <div class="form-group">
+                                        <div class="form-group">
                                             <label class="col-md-3 control-label"> Item </label>
                                             <div class="col-md-6">
                                                 <input type="text" name="item" id="input002" class=" form-control" placeholder="Item bought" required>
                                             </div>
                                         </div>
 
-                                            <div class="form-group">
-                                                <label class="col-md-3 control-label"> Purchase From</label>
-                                                <div class="col-md-6">
-                                                    <input type="text" name="purchase_from" id="input002" class=" form-control" placeholder="Item bought from" required>
-                                                </div>
+                                        <div class="form-group">
+                                            <label class="col-md-3 control-label"> Purchase From</label>
+                                            <div class="col-md-6">
+                                                <input type="text" name="purchase_from" id="input002" class=" form-control" placeholder="Item bought from" required>
                                             </div>
+                                        </div>
 
-                                            <div class="form-group">
+                                        <div class="form-group">
                                             <label for="datepicker1" class="col-md-3 control-label"> Date of Purchase </label>
                                             <div class="col-md-6">
                                                 <div class="input-group">
                                                     <div class="input-group-addon">
                                                         <i class="fa fa-calendar text-alert pr11"></i>
                                                     </div>
-
-                                                        <input type="text" id="datepicker1" class="select2-single form-control" name="date_of_purchase" required>
+                                                    <input type="text" id="datepicker1" class="select2-single form-control" name="date_of_purchase" required>
                                                 </div>
                                             </div>
                                         </div>
 
-                                            <div class="form-group">
-                                                <label class="col-md-3 control-label"> Amount</label>
-                                                <div class="col-md-6">
-                                                    <input type="text" name="amount" id="input002" class=" form-control" placeholder="price" required>
-                                                </div>
+                                        <div class="form-group">
+                                            <label class="col-md-3 control-label"> Amount</label>
+                                            <div class="col-md-6">
+                                                <input type="text" name="amount" id="input002" class=" form-control" placeholder="price" required>
                                             </div>
-
+                                        </div>
 
                                         <div class="form-group">
                                             <label class="col-md-3 control-label"></label>
                                             <div class="col-md-2">
-
-                                                <input type="submit" class="btn btn-bordered btn-info btn-block" value="Submit">
+                                                <input type="button" class="btn btn-bordered btn-info btn-block create-sub-btn" value="Submit">
                                             </div>
                                             <div class="col-md-2"><a href="/add-expense" >
                                                     <input type="button" class="btn btn-bordered btn-success btn-block" value="Reset"></a></div>
@@ -105,6 +112,9 @@
                                     </div>
 
                                     {!! Form::close() !!}
+                                    <div id="loader" class="loaderCustom text-danger hide">
+                                        <strong>Loading</strong> <i class="fa fa-spinner fa-spin fa-5x" aria-hidden="true"></i>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -118,6 +128,16 @@
     </div>
 @endsection
 @push('scripts')
-    <script src="/assets/js/pages/forms-widgets.js"></script>
-    <script src="/assets/js/custom.js"></script>
+    <script type="text/javascript">
+    $(document).ready(function(){
+        $(".create-sub-btn").on("click", function(){
+            $("#loader").removeClass("hide");
+            setTimeout(() => {
+                $(".createForm").submit();
+            }, 500);
+        });
+    });
+    </script>
+    <script src="{{ asset('/public/assets/js/pages/forms-widgets.js') }}"></script>
+    <script src="{{ asset('/public/assets/js/custom.js') }}"></script>
 @endpush

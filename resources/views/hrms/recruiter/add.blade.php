@@ -58,7 +58,7 @@
                                                 {{ Session::get('flash_message') }}
                                             </div>
                                         @endif
-                                        {!! Form::open(['class' => 'form-horizontal', 'url' => route('recruiter.store'), 'method' => 'post', 'files' => true]) !!}
+                                        {!! Form::open(['class' => 'form-horizontal createForm', 'url' => route('recruiter.store'), 'method' => 'post', 'files' => true]) !!}
                                             <div class="form-group">
                                                 <label for="name" class="col-md-3 control-label"> Name </label>
                                                 <div class="col-md-9">
@@ -120,13 +120,16 @@
                                             <div class="form-group">
                                                 <label class="col-md-3 control-label"></label>
                                                 <div class="col-md-2">
-                                                    <input type="submit" class="btn btn-bordered btn-info btn-block" id="save-btn" value="Submit">
+                                                    <input type="button" class="btn btn-bordered btn-info btn-block create-sub-btn" id="save-btn" value="Submit">
                                                 </div>
                                                 <div class="col-md-2">
                                                     <a class="btn btn-bordered btn-success btn-block" href="{{route('recruiter.index')}}">Cancel</a>
                                                 </div>
                                             </div>
                                         {!! Form::close() !!}
+                                        <div id="loader" class="loaderCustom text-danger hide">
+                                            <strong>Loading</strong> <i class="fa fa-spinner fa-spin fa-5x" aria-hidden="true"></i>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -147,6 +150,12 @@
     <script type="text/javascript">
     $(document).ready(function(){
         $('.skills').selectpicker();
+    });
+    $(".create-sub-btn").on("click", function(){
+        $("#loader").removeClass("hide");
+        setTimeout(() => {
+            $(".createForm").submit();
+        }, 500);
     });
     </script>
 @endpush

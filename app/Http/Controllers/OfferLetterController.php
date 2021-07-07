@@ -104,7 +104,7 @@ class OfferLetterController extends Controller
             }
         });
 
-        return redirect()->route('offer-letter.create')->with('flash_message', 'Offer Letter successfully added!');
+        return redirect()->route('offer-letter.index')->with('flash_message', 'Offer Letter successfully added!');
     }
 
     /**

@@ -27,7 +27,7 @@
         <!-- -------------- Content -------------- -->
         <section id="content" class="table-layout animated fadeIn" >
             <!-- -------------- Column Center -------------- -->
-            <div class="chute-affix" data-spy="affix" data-offset-top="200">
+            <div class="chute-affix" data-spy="" data-offset-top="200">
                 <div class="row">
                     <div class="col-xs-12">
                         <div class="box box-success">
@@ -54,18 +54,18 @@
                                                 {{Session::get('flash_message')}}
                                             </div>
                                         @endif
-                                        {!! Form::open(['class' => 'form-horizontal', 'url' => route('company-expense.store'), 'method' => 'post']) !!}
-                                        <div class="form-group">
+                                        {!! Form::open(['class' => 'form-horizontal createForm', 'url' => route('company-expense.store'), 'method' => 'post']) !!}
+                                        <!-- <div class="form-group">
                                             <label class="col-md-3 control-label"> Select Employee </label>
                                             <div class="col-md-6">
                                                 <select class="select2-multiple form-control select-primary" name="employee_id" id="employee_id" required>
                                                     <option value="" selected>Select One</option>
-                                                    @foreach($emps as $emp)
+                                                    {{-- @foreach($emps as $emp)
                                                         <option value="{{$emp->id}}">{{$emp->name}}</option>
-                                                    @endforeach
+                                                    @endforeach --}}
                                                 </select>
                                             </div>
-                                        </div>
+                                        </div> -->
 
                                         <div class="form-group">
                                             <label for="item" class="col-md-3 control-label"> Item </label>
@@ -103,7 +103,7 @@
                                         <div class="form-group">
                                             <label class="col-md-3 control-label"></label>
                                             <div class="col-md-2">
-                                                <input type="submit" class="btn btn-bordered btn-info btn-block" value="Submit">
+                                                <input type="button" class="btn btn-bordered btn-info btn-block create-sub-btn" value="Submit">
                                             </div>
                                             <div class="col-md-2">
                                                 <a class="btn btn-bordered btn-success btn-block" href="{{route('company-expense.index')}}">Cancel</a>
@@ -111,6 +111,9 @@
                                         </div>
 
                                     {!! Form::close() !!}
+                                    <div id="loader" class="loaderCustom text-danger hide">
+                                        <strong>Loading</strong> <i class="fa fa-spinner fa-spin fa-5x" aria-hidden="true"></i>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -138,6 +141,13 @@
                     inst.dpDiv.wrap('<div class="' + themeClass + '"></div>');
                 }
             }
+        });
+
+        $(".create-sub-btn").on("click", function(){
+            $("#loader").removeClass("hide");
+            setTimeout(() => {
+                $(".createForm").submit();
+            }, 500);
         });
     });
     </script>

@@ -123,11 +123,11 @@
 
     </div>
     @push('styles')
-        <link rel="stylesheet" type="text/css" href="/assets/allcp/forms/css/bootstrap-select.css">
+        <link rel="stylesheet" type="text/css" href="{{ asset('/public/assets/allcp/forms/css/bootstrap-select.css') }}">
     @endpush
 @endsection
 @push('scripts')
-    <script src="/assets/js/pages/forms-widgets.js"></script>
-    <script src="/assets/js/custom.js"></script>
-    <script src="/assets/allcp/forms/js/bootstrap-select.js"></script>
+    <script src="{{ asset('/public/assets/js/pages/forms-widgets.js') }}"></script>
+    <script src="{{ asset('/public/assets/js/custom.js') }}"></script>
+    <script src="{{ asset('/public/assets/allcp/forms/js/bootstrap-select.js') }}"></script>
 @endpush

@@ -57,7 +57,7 @@ class PaymentDetailsController extends Controller
         $paymentDetailsInput['upload_file'] = basename($path);
         PaymentDetails::create($paymentDetailsInput);
 
-        return redirect()->route('payment-details.create')->with('flash_message', 'Payment Details successfully added!');
+        return redirect()->route('payment-details.index')->with('flash_message', 'Payment Details successfully added!');
     }
 
     /**

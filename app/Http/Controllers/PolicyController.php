@@ -57,7 +57,7 @@ class PolicyController extends Controller
         $policyInput = $request->all();
         Policy::create($policyInput);
 
-        return redirect()->route('policy.create')->with('flash_message', 'Policy successfully added!');
+        return redirect()->route('policy.index')->with('flash_message', 'Policy successfully added!');
     }
 
     /**
@@ -68,7 +68,8 @@ class PolicyController extends Controller
      */
     public function show(Policy $policy)
     {
-        //
+        //dd($policy->toArray());
+        return view('hrms.policy.show', compact('policy'));
     }
 
     /**

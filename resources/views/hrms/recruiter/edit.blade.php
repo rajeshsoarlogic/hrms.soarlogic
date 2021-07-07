@@ -31,7 +31,7 @@
     <!-- -------------- Content -------------- -->
     <section id="content" class="table-layout animated fadeIn">
         <!-- -------------- Column Center -------------- -->
-        <div class="chute-affix" data-spy="affix" data-offset-top="200">
+        <div class="chute-affix" data-spy="" data-offset-top="200">
             <div class="row">
                 <div class="col-xs-12">
                     <div class="box box-success">

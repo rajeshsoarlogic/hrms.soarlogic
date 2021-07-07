@@ -60,7 +60,7 @@ class StampController extends Controller
         $stampInput['picture'] = basename($path);
         Stamp::create($stampInput);
 
-        return redirect()->route('stamp.create')->with('flash_message', 'Stamp successfully added!');
+        return redirect()->route('stamp.index')->with('flash_message', 'Stamp successfully added!');
     }
 
     /**

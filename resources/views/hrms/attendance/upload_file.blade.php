@@ -20,7 +20,7 @@
             </ol>
         </div>
         <div class="topbar-right">
-            <h4><a class="link-unstyled" href="/sample_sheet/attendance_sheet1.xlsx" title="">
+            <h4><a class="link-unstyled" href="{{asset('public/sample_sheet/attendance_sheet1.xlsx')}}" title="">
                     <i class="fa fa-cloud-download text-purple pr10"></i> Sample Sheet </a></h4>
         </div>
     </header>
@@ -82,7 +82,18 @@
                                 </div>
                             @endif
 
-                                {!! Form::open(['class' => 'form-horizontal', 'files' => true]) !!}
+                            
+                                @if ($errors->any())
+                                    <div class="alert alert-danger">
+                                        <ul>
+                                            @foreach ($errors->all() as $error)
+                                                <li>{{ $error }}</li>
+                                            @endforeach
+                                        </ul>
+                                    </div>
+                                @endif
+
+                                {!! Form::open(['class' => 'form-horizontal createForm', 'files' => true]) !!}
                                 <div class="panel-body pn mv12">
 
                                     <div class="section">
@@ -91,7 +102,6 @@
                                                    placeholder="Description" required>
                                        </div>
                                     <!-- -------------- /section -------------- -->
-
 
                                     <div class="section">
                                         <div class="input-group">
@@ -115,7 +125,7 @@
                                     </div>
 
                                     <div class="section">
-                                        <input type="submit" class="btn btn-bordered btn-info btn-block" value="Submit">
+                                        <input type="button" class="btn btn-bordered btn-info btn-block create-sub-btn" value="Submit">
                                         </div>
 
                                     <!-- -------------- /section -------------- -->
@@ -123,6 +133,9 @@
                                 </div>
                                 {!! Form::close() !!}
                                 <!-- -------------- /Form -------------- -->
+                                <div id="loader" class="loaderCustom text-danger hide">
+                                    <strong>Loading</strong> <i class="fa fa-spinner fa-spin fa-5x" aria-hidden="true"></i>
+                                </div>
                             </form>
                             </div>
                         </div>
@@ -203,5 +216,16 @@
 
 @endsection
 @push('scripts')
-    <script src="/assets/js/pages/forms-widgets.js"></script>
+    <script type="text/javascript">
+    $(document).ready(function(){
+        $(".create-sub-btn").on("click", function(){
+            $("#loader").removeClass("hide");
+            setTimeout(() => {
+                $(".createForm").submit();
+            }, 500);
+        });
+    });
+    </script>
+    <script src="{{ asset('/public/assets/js/pages/forms-widgets.js') }}"></script>
+    <script src="{{ asset('/public/assets/js/custom.js') }}"></script>
 @endpush

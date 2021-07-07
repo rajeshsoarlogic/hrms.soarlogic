@@ -16,6 +16,10 @@ class TrainingController extends Controller
     }
 
     public function processTrainingProgram(Request $request){
+        $request->validate([
+            'name' => 'required',
+        ]);
+        
        $programs = new TrainingProgram();
        $programs->name = $request->name;
        $programs->description = $request->description;

@@ -9,6 +9,8 @@ use App\Models\Role;
 use App\Models\UserRole;
 use App\Promotion;
 use App\User;
+use App\Department;
+use App\EmployeeCategory;
 use Carbon\Carbon;
 use Illuminate\Http\Response;
 use Illuminate\Http\Request;
@@ -17,14 +19,18 @@ use App\Http\Requests;
 use Illuminate\Support\Facades\Input;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Mail;
+use Zip;
 
 class EmpController extends Controller
 {
     public function addEmployee()
     {
         $roles = Role::get();
+        $departments = Department::get();
+        $categories = EmployeeCategory::get();
+        //dd($categories->toArray());
 
-        return view('hrms.employee.add', compact('roles'));
+        return view('hrms.employee.add', compact('roles', 'departments', 'categories'));
     }
 
     public function processEmployee(Request $request)
@@ -68,6 +74,7 @@ class EmpController extends Controller
         $emp->current_address      = $request->current_address;
         $emp->permanent_address    = $request->permanent_address;
         $emp->formalities          = $request->formalities;
+        $emp->employee_category_id = $request->employee_category_id;
         $emp->offer_acceptance     = $request->offer_acceptance;
         $emp->probation_period     = $request->probation_period;
         $emp->date_of_confirmation = date_format(date_create($request->date_of_confirmation), 'Y-m-d');
@@ -97,9 +104,11 @@ class EmpController extends Controller
           $message->to($user->email, $user->name)->subject('Registered successfully');
         });
 
+        $showEmpDetailsUrl = Route('employee-details', $emp->id);
+
         //$emp->userrole()->create(['role_id' => $request->role]);
 
-        return json_encode(['title' => 'Success', 'message' => 'Employee added successfully', 'class' => 'modal-header-success']);
+        return json_encode(['title' => 'Success', 'message' => 'Employee added successfully', 'class' => 'modal-header-success', 'showEmpDetailsUrl' => $showEmpDetailsUrl]);
 
     }
 
@@ -108,19 +117,30 @@ class EmpController extends Controller
         $emps   = User::with('employee', 'role.role')->paginate(15);
         $column = '';
         $string = '';
+        //dd($emps->toArray());
 
         return view('hrms.employee.show_emp', compact('emps', 'column', 'string'));
+    }
+
+    public function showEmployeeDetails($id)
+    {
+        $emp   = User::with('employee', 'role.role')->find($id);
+        //dd($emp->toArray());
+
+        return view('hrms.employee.details', compact('emp'));
     }
 
     public function showEdit($id)
     {
         //$emps = Employee::whereid($id)->with('userrole.role')->first();
         $emps = User::where('id', $id)->with('employee', 'role.role')->first();
+        $departments = Department::get();
+        $categories = EmployeeCategory::get();
         //dd($emps->toArray());
 
         $roles = Role::get();
 
-        return view('hrms.employee.add', compact('emps', 'roles'));
+        return view('hrms.employee.add', compact('emps', 'roles', 'departments', 'categories'));
     }
 
     public function doEdit(Request $request, $id)
@@ -159,6 +179,7 @@ class EmpController extends Controller
         $address           = $request->current_address;
         $permanent_address = $request->permanent_address;
         $formalities       = $request->formalities;
+        $employee_category_id = $request->employee_category_id;
         $offer_acceptance  = $request->offer_acceptance;
         $prob_period       = $request->probation_period;
         $doc               = date_format(date_create($request->date_of_confirmation), 'Y-m-d');
@@ -232,9 +253,11 @@ class EmpController extends Controller
         if (!empty($permanent_address)) {
             $edit->permanent_address = $permanent_address;
         }
-
         if (isset($formalities)) {
             $edit->formalities = $formalities;
+        }
+        if (isset($employee_category_id)) {
+            $edit->employee_category_id = $employee_category_id;
         }
         if (isset($offer_acceptance)) {
             $edit->offer_acceptance = $offer_acceptance;
@@ -283,7 +306,9 @@ class EmpController extends Controller
         }
 
         $edit->save();
-        return json_encode(['title' => 'Success', 'message' => 'Employee details successfully updated', 'class' => 'modal-header-success']);
+
+        $showEmpDetailsUrl = Route('employee-details', $id);
+        return json_encode(['title' => 'Success', 'message' => 'Employee details successfully updated', 'class' => 'modal-header-success', 'showEmpDetailsUrl' => $showEmpDetailsUrl]);
     }
 
     public function doDelete($id)
@@ -478,6 +503,182 @@ class EmpController extends Controller
         return redirect()->back();
     }
 
+    public function uploadZipFile(Request $request)
+    {
+        //dd($request->toArray());
+        $zipPath = $request->file('upload_zip_file')->store('employee-excelsheet');
+        $zip = Zip::open(storage_path('app/'.$zipPath));
+        $zip->extract(storage_path('app/employee-excelsheet/'));
+        $zipFiles = $zip->listFiles();
+        // $reader = Excel::load(storage_path('app/employee-excelsheet/'.$zipFiles[0]), function ($reader) {
+        //     echo "hello";
+        //     $reader->dd();
+        // })->get();
+        // dd($reader);
+
+        $file = storage_path('app/employee-excelsheet/'.$zipFiles[0]);
+        /* try {*/
+        Excel::load($file, function ($reader) {
+            $rows = $reader->get(['name', 'code', 'status', 'role', 'gender', 'dob', 'doj', 'mob_number', 'qualification', 'emergency_number', 'pan_number', 'father_name', 'current_address', 'permanent_address', 'formalities', 'offer_acceptance', 'probation_period', 'date_of_confirmation', 'department', 'salary', 'account_number', 'bank_name', 'ifsc_code', 'pf_account_number', 'un_number', 'pf_status', 'date_of_resignation', 'notice_period', 'last_working_day', 'full_final']);
+            foreach ($rows as $row) {
+                \Log::info($row->role);
+                $user           = new User;
+                $user->name     = $row->name;
+                $user->email    = str_replace(' ', '_', $row->name) . '@sipi-ip.sg';
+                $user->password = bcrypt('123456');
+                $user->save();
+                $attachment         = new Employee();
+                $attachment->photo  = '/img/Emp.jpg';
+                $attachment->name   = $row->name;
+                $attachment->code   = $row->code;
+                $attachment->status = convertStatus($row->status);
+
+                if (empty($row->gender)) {
+                    $attachment->gender = 'Not Exist';
+                } else {
+                    $attachment->gender = $row->gender;
+                }
+                if (empty($row->dob)) {
+                    $attachment->date_of_birth = '0000-00-00';
+                } else {
+                    $attachment->date_of_birth = date('Y-m-d', strtotime($row->dob));
+                }
+                if (empty($row->doj)) {
+                    $attachment->date_of_joining = '0000-00-00';
+                } else {
+                    $attachment->date_of_joining = date('Y-m-d', strtotime($row->doj));
+                }
+                if (empty($row->mob_number)) {
+                    $attachment->number = '1234567890';
+                } else {
+                    $attachment->number = $row->mob_number;
+                }
+                if (empty($row->qualification)) {
+                    $attachment->qualification = 'Not Exist';
+                } else {
+                    $attachment->qualification = $row->qualification;
+                }
+                if (empty($row->emer_number)) {
+                    $attachment->emergency_number = '1234567890';
+                } else {
+                    $attachment->emergency_number = $row->emer_number;
+                }
+                if (empty($row->pan_number)) {
+                    $attachment->pan_number = 'Not Exist';
+                } else {
+                    $attachment->pan_number = $row->pan_number;
+                }
+                if (empty($row->father_name)) {
+                    $attachment->father_name = 'Not Exist';
+                } else {
+                    $attachment->father_name = $row->father_name;
+                }
+                if (empty($row->address)) {
+                    $attachment->current_address = 'Not Exist';
+                } else {
+                    $attachment->current_address = $row->address;
+                }
+                if (empty($row->permanent_address)) {
+                    $attachment->permanent_address = 'Not Exist';
+                } else {
+                    $attachment->permanent_address = $row->permanent_address;
+                }
+                if (empty($row->emp_formalities)) {
+                    $attachment->formalities = '1';
+                } else {
+                    $attachment->formalities = $row->emp_formalities;
+                }
+                if (empty($row->offer_acceptance)) {
+                    $attachment->offer_acceptance = '1';
+                } else {
+                    $attachment->offer_acceptance = $row->offer_acceptance;
+                }
+                if (empty($row->prob_period)) {
+                    $attachment->probation_period = 'Not Exist';
+                } else {
+                    $attachment->probation_period = $row->prob_period;
+                }
+                if (empty($row->doc)) {
+                    $attachment->date_of_confirmation = '0000-00-00';
+                } else {
+                    $attachment->date_of_confirmation = date('Y-m-d', strtotime($row->doc));
+                }
+                if (empty($row->department)) {
+                    $attachment->department = 'Not Exist';
+                } else {
+                    $attachment->department = $row->department;
+                }
+                if (empty($row->salary)) {
+                    $attachment->salary = '00000';
+                } else {
+                    $attachment->salary = $row->salary;
+                }
+                if (empty($row->account_number)) {
+                    $attachment->account_number = 'Not Exist';
+                } else {
+                    $attachment->account_number = $row->account_number;
+                }
+                if (empty($row->bank_name)) {
+                    $attachment->bank_name = 'Not Exist';
+                } else {
+                    $attachment->bank_name = $row->bank_name;
+                }
+                if (empty($row->ifsc_code)) {
+                    $attachment->ifsc_code = 'Not Exist';
+                } else {
+                    $attachment->ifsc_code = $row->ifsc_code;
+                }
+                if (empty($row->pf_account_number)) {
+                    $attachment->pf_account_number = 'Not Exist';
+                } else {
+                    $attachment->pf_account_number = $row->pf_account_number;
+                }
+                if (empty($row->un_number)) {
+                    $attachment->un_number = 'Not Exist';
+                } else {
+                    $attachment->un_number = $row->un_number;
+                }
+                if (empty($row->pf_status)) {
+                    $attachment->pf_status = '1';
+                } else {
+                    $attachment->pf_status = $row->pf_status;
+                }
+                if (empty($row->dor)) {
+                    $attachment->date_of_resignation = '0000-00-00';
+                } else {
+                    $attachment->date_of_resignation = date('Y-m-d', strtotime($row->dor));
+                }
+                if (empty($row->notice_period)) {
+                    $attachment->notice_period = 'Not exist';
+                } else {
+                    $attachment->notice_period = $row->notice_period;
+                }
+                if (empty($row->last_working_day)) {
+                    $attachment->last_working_day = '0000-00-00';
+                } else {
+                    $attachment->last_working_day = date('Y-m-d', strtotime($row->last_working_day));
+                }
+                if (empty($row->full_final)) {
+                    $attachment->full_final = 'Not exist';
+                } else {
+                    $attachment->full_final = $row->full_final;
+                }
+                $attachment->user_id = $user->id;
+                $attachment->save();
+                $userRole          = new UserRole();
+                $userRole->role_id = convertRole($row->role);
+                $userRole->user_id = $user->id;
+                $userRole->save();
+            }
+            return 1;
+            //return redirect('upload_form');*/
+        });
+        /*catch (\Exception $e) {
+           return $e->getMessage();*/
+        \Session::flash('success', ' Employee details uploaded successfully.');
+        return redirect()->back();
+    }
+
     public function searchEmployee(Request $request)
     {
         $string = $request->string;
@@ -606,6 +807,9 @@ class EmpController extends Controller
 
     public function processPromotion(Request $request)
     {
+        $request->validate([
+            'emp_id' => 'required',
+        ]);
 
         $newDesignation  = Role::where('id', $request->new_designation)->first();
         $process         = Employee::where('id', $request->emp_id)->first();

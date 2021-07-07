@@ -52,7 +52,7 @@ class SkillsetController extends Controller
         $skillsetInput = $request->all();
         Skillset::create($skillsetInput);
         
-        return redirect()->route('skill-set.create')->with('flash_message', 'Skill successfully added!');
+        return redirect()->route('skill-set.index')->with('flash_message', 'Skill successfully added!');
     }
 
     /**

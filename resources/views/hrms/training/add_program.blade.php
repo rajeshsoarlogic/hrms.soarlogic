@@ -38,21 +38,29 @@
                             <div class="panel-body pn">
                                 <div class="table-responsive">
                                     <div class="panel-body p25 pb10">
+                                        @if ($errors->any())
+                                            <div class="alert alert-danger">
+                                                <ul>
+                                                    @foreach ($errors->all() as $error)
+                                                        <li>{{ $error }}</li>
+                                                    @endforeach
+                                                </ul>
+                                            </div>
+                                        @endif
+
                                         @if(Session::has('flash_message'))
                                             <div class="alert alert-success">
                                                 {{Session::get('flash_message')}}
                                             </div>
                                         @endif
-                                        {!! Form::open(['class' => 'form-horizontal']) !!}
 
-
+                                        {!! Form::open(['class' => 'form-horizontal createForm']) !!}
                                         <div class="form-group">
                                             <label class="col-md-3 control-label"> Training Program </label>
                                             <div class="col-md-6">
                                                 <input type="text" name="name" id="input002" class="select2-single form-control" placeholder="program" required>
                                             </div>
                                         </div>
-
 
                                         <div class="form-group">
                                             <label class="col-md-3 control-label"> Description </label>
@@ -61,19 +69,19 @@
                                             </div>
                                         </div>
 
-
                                         <div class="form-group">
                                             <label class="col-md-3 control-label"></label>
                                             <div class="col-md-2">
-
-                                                <input type="submit" class="btn btn-bordered btn-info btn-block" value="Submit">
-
+                                                <input type="button" class="btn btn-bordered btn-info btn-block create-sub-btn" value="Submit">
                                             </div>
                                             <div class="col-md-2"><a href="/add-training-program" >
                                                     <input type="button" class="btn btn-bordered btn-success btn-block" value="Reset"></a></div>
                                         </div>
                                     </div>
                                     {!! Form::close() !!}
+                                    <div id="loader" class="loaderCustom text-danger hide">
+                                        <strong>Loading</strong> <i class="fa fa-spinner fa-spin fa-5x" aria-hidden="true"></i>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -86,3 +94,16 @@
 
     </div>
 @endsection
+
+@push('scripts')
+    <script type="text/javascript">
+    $(document).ready(function(){
+        $(".create-sub-btn").on("click", function(){
+            $("#loader").removeClass("hide");
+            setTimeout(() => {
+                $(".createForm").submit();
+            }, 500);
+        });
+    });
+    </script>
+@endpush

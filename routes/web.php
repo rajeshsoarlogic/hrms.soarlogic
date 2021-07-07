@@ -11,6 +11,19 @@
 |
 */
 
+Route::get('/cleareverything', function () {
+    
+    $clearcache = Artisan::call('cache:clear');
+    echo "Cache cleared<br>";
+
+    $clearview = Artisan::call('view:clear');
+    echo "View cleared<br>";
+
+    $clearconfig = Artisan::call('config:cache');
+    echo "Config cleared<br>";
+
+});
+
 //Route::group(['middleware' => ['web']], function () {
 
 Route::group(['middleware' => ['guest']], function ()
@@ -53,11 +66,15 @@ Route::group(['middleware' => ['auth']], function ()
 
     Route::get('employee-manager', ['as' => 'employee-manager', 'uses' => 'EmpController@showEmployee']);
 
+    Route::get('employee-details/{id}', ['as' => 'employee-details', 'uses' => 'EmpController@showEmployeeDetails']);
+
     Route::post('employee-manager', 'EmpController@searchEmployee');
 
     Route::get('upload-emp', ['as' => 'upload-emp', 'uses' => 'EmpController@importFile']);
 
     Route::post('upload-emp', ['as' => 'upload-emp', 'uses' => 'EmpController@uploadFile']);
+
+    Route::post('upload-emp-zip', ['as' => 'upload-emp-zip', 'uses' => 'EmpController@uploadZipFile']);
 
     Route::get('edit-emp/{id}', ['as' => 'edit-emp', 'uses' => 'EmpController@showEdit']);
 
@@ -115,8 +132,14 @@ Route::group(['middleware' => ['auth']], function ()
     //Routes for designation
     Route::resource('designation', 'DesignationController');
 
+    //Routes for employee performance
+    Route::resource('employee-performance', 'EmployeePerformanceController');
+
     //Routes for company details
     Route::resource('company-detail', 'CompanyDetailController');
+
+    //Routes for employee category
+    Route::resource('employee-category', 'EmployeeCategoryController');
 
     //Routes for Bank Account details
 
@@ -393,3 +416,30 @@ Route::group(['middleware' => ['auth']], function ()
 Route::get('accept/offerletter/{token}', 'OfferLetterController@acceptOfferletter')->name('accept.offerletter');
 Route::post('accept/offerletter/process', 'OfferLetterController@acceptOfferletterProcess')->name('accept.offerletter.process');
 Route::post('reject/offerletter/process', 'OfferLetterController@rejectOfferletterProcess')->name('reject.offerletter.process');
+
+
+/*employee performance routes*/
+Route::middleware(['auth'])->prefix('emp/performance')->name('emp.performance.')->group(function () {
+    Route::get('/', function () {
+        return view('hrms.employee_performance.index');
+    })->name('index');
+    Route::get('/add', function () {
+        return view('hrms.employee_performance.add');
+    })->name('add');
+    Route::get('/edit', function () {
+        return view('hrms.employee_performance.edit');
+    })->name('edit');
+});
+
+/*department routes*/
+Route::middleware(['auth'])->prefix('react/department')->name('react.department.')->group(function () {
+    Route::get('/', function () {
+        return view('hrms.react.department.index');
+    })->name('index');
+    Route::get('/add', function () {
+        return view('hrms.react.department.add');
+    })->name('add');
+    Route::get('/edit/{id}', function () {
+        return view('hrms.react.department.edit');
+    })->name('edit');
+});

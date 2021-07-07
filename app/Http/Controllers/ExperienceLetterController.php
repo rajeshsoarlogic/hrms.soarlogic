@@ -94,7 +94,7 @@ class ExperienceLetterController extends Controller
             $message->attach(asset('storage/app/expletter/'.$pdf_name));
         });
 
-        return redirect()->route('experience-letter.create')->with('flash_message', 'Experience Letter successfully added!');
+        return redirect()->route('experience-letter.index')->with('flash_message', 'Experience Letter successfully added!');
     }
 
     /**

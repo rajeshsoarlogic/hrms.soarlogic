@@ -63,6 +63,18 @@
         .blink_third {
             color:yellow;
         }
+        
+        .loaderCustom{
+            position: absolute;
+            top: 50%;
+            bottom: 50%;
+            left: 50%;
+            right: 50%;
+        }
+        .form-horizontal .control-label{
+            text-align: left;
+            padding-left: 12px;
+        }
     </style>
 
 </head>
@@ -663,7 +675,7 @@ h
     {{--<script src="{{ asset('/public/assets/js/custom.js') }}"></script>--}}
     {{--@endif--}}
 
-{{--<script src="{{ asset('/public/assets/js/function.js') }}"></script>--}}
+<script src="{{ asset('/public/assets/js/function.js') }}"></script>
 {{--@if(\Route::getFacadeRoot()->current()->uri() == 'edit-asset-assignment/{id}')--}}
     {{--<script src="{{ asset('/public/assets/js/pages/forms-widgets.js') }}"></script>--}}
     {{--<script src="{{ asset('/public/assets/js/custom.js') }}"></script>--}}

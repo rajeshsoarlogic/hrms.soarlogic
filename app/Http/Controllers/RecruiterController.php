@@ -6,6 +6,8 @@ use App\Recruiter;
 use App\User;
 use App\Skillset;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use File;
 
 class RecruiterController extends Controller
 {
@@ -64,7 +66,7 @@ class RecruiterController extends Controller
         $recruiteInput['resume'] = basename($path);
         Recruiter::create($recruiteInput);
 
-        return redirect()->route('recruiter.create')->with('flash_message', 'Recruiter successfully added!');
+        return redirect()->route('recruiter.index')->with('flash_message', 'Recruiter successfully added!');
     }
 
     /**
@@ -75,7 +77,33 @@ class RecruiterController extends Controller
      */
     public function show(Recruiter $recruiter)
     {
-        //
+        //dd($recruiter->toArray());
+        $pathToFile = storage_path('app/recruiter/resume/'.$recruiter->resume);
+        //dd(File::mimeType($pathToFile));
+
+        $ext =File::extension($pathToFile);
+        if($ext=='pdf'){
+            $content_types='application/pdf';
+        }elseif ($ext=='doc') {
+            $content_types='application/msword';  
+        }elseif ($ext=='docx') {
+            $content_types='application/vnd.openxmlformats-officedocument.wordprocessingml.document';  
+        }elseif ($ext=='xls') {
+            $content_types='application/vnd.ms-excel';  
+        }elseif ($ext=='xlsx') {
+            $content_types='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';  
+        }elseif ($ext=='txt') {
+            $content_types='application/octet-stream';  
+        }
+
+        try {
+            return response()->file($pathToFile, [
+                'Content-Type' => File::mimeType($pathToFile)
+            ]);
+        } catch (\Exception $e) {
+            return $e->getMessage();
+        }
+        return view('hrms.recruiter.show', compact('recruiter'));
     }
 
     /**

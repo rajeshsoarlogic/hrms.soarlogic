@@ -19,6 +19,11 @@ class ExpenseController extends Controller
 
     public function processExpense(Request $request)
     {
+        $request->validate([
+            'emp_id' => 'required',
+            'item' => 'required',
+        ]);
+        
         $expense = new Expense();
         $expense->user_id = $request->emp_id;
         $expense->item = $request->item;

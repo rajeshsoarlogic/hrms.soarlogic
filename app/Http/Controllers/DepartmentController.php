@@ -46,7 +46,7 @@ class DepartmentController extends Controller
         $departmentInput = $request->all();
         Department::create($departmentInput);
 
-        return redirect()->route('department.create')->with('flash_message', 'Department successfully added!');
+        return redirect()->route('department.index')->with('flash_message', 'Department successfully added!');
     }
 
     /**

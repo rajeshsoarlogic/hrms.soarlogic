@@ -27,6 +27,11 @@ class TeamController extends Controller
 
     public function processTeam(Request $request)
     {
+        $request->validate([
+            'manager_id' => 'required',
+            'leader_id' => 'required|image',
+        ]);
+
         $team_id = Team::max('team_id');
         if (!$team_id) {
             $team_id = 1;

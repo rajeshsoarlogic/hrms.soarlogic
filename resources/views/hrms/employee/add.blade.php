@@ -644,6 +644,27 @@
                                 <section class="wizard-section">
                                     <!-- -------------- /section -------------- -->
                                     <div class="section">
+                                        <label for="employee_category_id">
+                                            <h6 class="mb20 mt40"> Category </h6>
+                                        </label>
+                                        @if(\Route::getFacadeRoot()->current()->uri() == 'edit-emp/{id}')
+                                            <select class="select2-single form-control" name="employee_category_id" id="employee_category_id">
+                                                <option value="">Select Employee Category</option>
+                                                @foreach($categories as $cat)
+                                                    <option value="{{$cat->id}}" @if($emps->employee->employee_category_id == $cat->id) selected @endif>{{$cat->title}}</option>
+                                                @endforeach
+                                            </select>
+                                        @else
+                                            <select class="select2-single form-control" name="employee_category_id" id="employee_category_id">
+                                                <option value="">Select Employee Category</option>
+                                                @foreach($categories as $cat)
+                                                    <option value="{{$cat->id}}">{{$cat->title}}</option>
+                                                @endforeach
+                                            </select>
+                                        @endif
+                                    </div>
+
+                                    <div class="section">
                                         <label for="input002"><h6 class="mb20 mt40"> Joining Formalities </h6></label>
 
                                         <div class="option-group field">
@@ -746,38 +767,26 @@
 
                                     <div class="section">
                                         <label for="input002"><h6 class="mb20 mt40"> Department </h6></label>
-                                            <select class="select2-single form-control" name="department" id="department">
-                                                <option value="">Select department</option>
-                                                @if(\Route::getFacadeRoot()->current()->uri() == 'edit-emp/{id}')
-                                                    @if($emps->employee->department == 'Marketplace')
-                                                        <option value="Marketplace" selected>Marketplace</option>
-                                                        <option value="Social Media">Social Media</option>
-                                                        <option value="IT">IT</option>
-                                                    @elseif($emps->employee->department == 'Social Media')
-                                                        <option value="Marketplace">Marketplace</option>
-                                                        <option value="Social Media" selected>Social Media</option>
-                                                        <option value="IT">IT</option>
-                                                    @else
-                                                        <option value="Marketplace">Marketplace</option>
-                                                        <option value="Social Media">Social Media</option>
-                                                        <option value="IT" selected>IT</option>
-                                                    @endif
-                                                @else
-                                                    <option value="Marketplace">Marketplace</option>
-                                                    <option value="Social Media">Social Media</option>
-                                                    <option value="IT">IT</option>
-                                                @endif
-                                            </select>
+                                        <select class="select2-single form-control" name="department" id="department">
+                                            <option value="">Select department</option>
+                                            @if(\Route::getFacadeRoot()->current()->uri() == 'edit-emp/{id}')
+                                                @foreach($departments as $department)
+                                                    <option value="{{$department->id}}" @if($emps->employee->department == $department->id) selected @endif>{{$department->title}}</option>
+                                                @endforeach
+                                            @else
+                                                @foreach($departments as $department)
+                                                    <option value="{{$department->id}}">{{$department->title}}</option>
+                                                @endforeach
+                                            @endif
+                                        </select>
                                     </div>
-
 
                                     <div class="section">
                                         <label for="input002"><h6 class="mb20 mt40"> Salary on Confirmation </h6>
                                         </label>
                                         <label for="input002" class="field prepend-icon">
                                             @if(\Route::getFacadeRoot()->current()->uri() == 'edit-emp/{id}')
-                                                <input type="text" name="salary" id="salary" class="gui-input"
-                                                       value="@if($emps && $emps->employee->salary){{$emps->employee->salary}}@endif" readonly>
+                                                <input type="text" name="salary" id="salary" class="gui-input" value="@if($emps && $emps->employee->salary){{$emps->employee->salary}}@endif" @if(Auth::user()->role->id != 1) readonly @endif>
                                                 <label for="input002" class="field-icon">
                                                     <i class="fa fa-inr"></i>
                                                 </label>
@@ -927,12 +936,9 @@
                                 <h4 class="wizard-section-title">
                                     <i class="fa fa-file-text pr5"></i> Ex Employment Details </h4>
                                 <section class="wizard-section">
-
-
                                     <div class="section">
                                         <label for="datepicker6" class="field prepend-icon mb5"><h6 class="mb20 mt40">
                                                 Date of Resignation </h6></label>
-
                                         <div class="field prepend-icon">
                                             @if(\Route::getFacadeRoot()->current()->uri() == 'edit-emp/{id}')
                                                 <input type="text" id="datepicker6" class="gui-input fs13" name="dor"
@@ -948,7 +954,6 @@
                                             @endif
                                         </div>
                                     </div>
-
 
                                     <div class="section">
                                         <label for="input002"><h6 class="mb20 mt40"> Notice Period </h6></label>
@@ -969,11 +974,9 @@
                                             </select>
                                     </div>
 
-
                                     <div class="section">
                                         <label for="datepicker7" class="field prepend-icon mb5"><h6 class="mb20 mt40">
                                                 Last Working Day </h6></label>
-
                                         <div class="field prepend-icon">
                                             @if(\Route::getFacadeRoot()->current()->uri() == 'edit-emp/{id}')
                                                 <input type="text" id="datepicker7" class="gui-input fs13"
@@ -992,10 +995,8 @@
                                         </div>
                                     </div>
 
-
                                     <div class="section">
                                         <label for="input002"><h6 class="mb20 mt40"> Full & Final </h6></label>
-
                                         <div class="option-group field">
                                             <label class="field option mb5">
                                                 <input type="hidden" value="{!! csrf_token() !!}" id="token">
@@ -1014,6 +1015,9 @@
 
                         </form>
                         <!-- -------------- /Form -------------- -->
+                        <div id="loader" class="loaderCustom text-danger hide">
+                            <strong>Loading</strong> <i class="fa fa-spinner fa-spin fa-5x" aria-hidden="true"></i>
+                        </div>
 
                     </div>
                     <!-- -------------- /Spec Form -------------- -->
@@ -1136,6 +1140,14 @@
     .wizard .steps .glyphicon {
         display: none;
     }
+        
+    .loaderCustom{
+        position: absolute;
+        top: 40%;
+        bottom: 50%;
+        left: 50%;
+        right: 50%;
+    }
 </style>
 
 <!-- -------------- Scripts -------------- -->
@@ -1171,11 +1183,9 @@
 <script src="/public/assets/js/custom_form_wizard.js"></script>
 @endpush
 
-        <!-- -------------- Select2 JS -------------- -->
+<!-- -------------- Select2 JS -------------- -->
 <script src="/public/assets/js/plugins/select2/select2.min.js"></script>
 <script src="/public/assets/js/function.js"></script>
-
-
 
 <!-- -------------- /Scripts -------------- -->
 </body>

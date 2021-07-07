@@ -82,9 +82,10 @@
                                             </td>
                                             <td class="text-center">{{ $recruiter->created_at->format('d-M-Y') }}</td>
                                             <td class="text-center">
-                                                <a href="{{asset('storage/app/recruiter/resume/'.$recruiter->resume)}}" target="_blank">
+                                                <!-- <a href="{{asset('storage/app/recruiter/resume/'.$recruiter->resume)}}" target="_blank">
                                                     <i class="fa fa-eye"></i>
-                                                </a>
+                                                </a> -->
+                                                <a href="{{ route('recruiter.show', $recruiter->id) }}" target="_blank"><i class="fa fa-eye"></i></a>
                                             </td>
                                             <td class="text-center">
                                                 <div class="btn-group text-right">

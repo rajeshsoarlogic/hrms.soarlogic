@@ -7,7 +7,6 @@
             @else
                 <img src="/public/assets/img/avatars/profile_pic.png" class="img-responsive">
             @endif
-
         </a>
 
         <div class="media-body">
@@ -53,6 +52,22 @@
                 <li>
                     <a href="{{route('upload-emp')}}">
                         <span class="glyphicon glyphicon-tags"></span> Upload </a>
+                </li>
+                <li>
+                    <a href="{{route('employee-performance.create')}}">
+                        <span class="glyphicon glyphicon-tags"></span> Add Employee Performance</a>
+                </li>
+                <li>
+                    <a href="{{route('employee-performance.index')}}">
+                        <span class="glyphicon glyphicon-tags"></span> Employee Performance Listing </a>
+                </li>
+                <li>
+                    <a href="{{route('employee-category.create')}}">
+                        <span class="glyphicon glyphicon-tags"></span> Add Category</a>
+                </li>
+                <li>
+                    <a href="{{route('employee-category.index')}}">
+                        <span class="glyphicon glyphicon-tags"></span> Category Listing </a>
                 </li>
             </ul>
         </li>
@@ -429,7 +444,7 @@
             </ul>
         </li>
 
-        <li>
+        <!-- <li>
             <a class="accordion-toggle" href="/dashboard">
                 <span class="fa fa-money"></span>
                 <span class="sidebar-title">Expenses</span>
@@ -445,7 +460,7 @@
                         <span class="glyphicon glyphicon-modal-window"></span> Expense Listings </a>
                 </li>
             </ul>
-        </li>
+        </li> -->
 
         <li>
             <a class="accordion-toggle" href="/dashboard">

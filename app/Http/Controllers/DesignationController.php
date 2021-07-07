@@ -46,7 +46,7 @@ class DesignationController extends Controller
         $designationInput = $request->all();
         Designation::create($designationInput);
 
-        return redirect()->route('designation.create')->with('flash_message', 'Designation successfully added!');
+        return redirect()->route('designation.index')->with('flash_message', 'Designation successfully added!');
     }
 
     /**

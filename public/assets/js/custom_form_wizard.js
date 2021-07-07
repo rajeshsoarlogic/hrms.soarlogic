@@ -14,6 +14,7 @@
         "use strict";
 
 
+        
         // Form Wizard
         var form = $("#custom-form-wizard");
         form.validate({
@@ -30,7 +31,11 @@
             headerTag: ".wizard-section-title",
             bodyTag: ".wizard-section",
             onStepChanging: function (event, currentIndex, newIndex) {
+                $("#loader").removeClass("hide");
                 form.validate().settings.ignore = ":disabled,:hidden";
+                setTimeout(() => {
+                    $("#loader").addClass("hide");
+                }, 500);
                 return form.valid();
             },
             onFinishing: function (event, currentIndex) {
@@ -67,6 +72,7 @@
                 if (probation_period == 'Other') {
                     probation_period = $('.probation_text').val();
                 }
+                var employee_category_id = $('#employee_category_id').val();
                 var datepicker5 = $('#datepicker5').val();
                 var department = $('#department').val();
                 var salary = $('#salary').val();
@@ -103,6 +109,7 @@
                 formData.append('current_address', address);
                 formData.append('permanent_address', permanent_address);
                 formData.append('formalities', formalities);
+                formData.append('employee_category_id', employee_category_id);
                 formData.append('offer_acceptance', offer_acceptance);
                 formData.append('probation_period', probation_period);
                 formData.append('date_of_confirmation', datepicker5);
@@ -136,6 +143,7 @@
                         $('.modal-title').append(parsed.title);
                         $('.modal-body').append(parsed.message);
                         $('#notification-modal').modal('show');
+                        window.location.href = parsed.showEmpDetailsUrl;
                     }
                 });
 

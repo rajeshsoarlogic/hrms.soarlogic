@@ -15,7 +15,8 @@ class CompanyExpenseController extends Controller
      */
     public function index()
     {
-        $expenses = CompanyExpense::with('employee')->paginate(10);
+        //$expenses = CompanyExpense::with('employee')->paginate(10);
+        $expenses = CompanyExpense::paginate(10);
         //dd($expenses->toArray());
         return view('hrms.companyexpense.index', compact('expenses'));
     }
@@ -43,7 +44,7 @@ class CompanyExpenseController extends Controller
         //dd( $request->toArray() );
 
         $request->validate([
-            'employee_id' => 'required',
+            //'employee_id' => 'required',
             'item' => 'required',
             'purchase_from' => 'required',
             'date_of_purchase' => 'required',
@@ -54,7 +55,7 @@ class CompanyExpenseController extends Controller
         $companyExpenseInput['date_of_purchase'] = date_format(date_create($request->date_of_purchase), 'Y-m-d');
         CompanyExpense::create($companyExpenseInput);
 
-        return redirect()->route('company-expense.create')->with('flash_message', 'Company Expense successfully added!');
+        return redirect()->route('company-expense.index')->with('flash_message', 'Company Expense successfully added!');
     }
 
     /**
@@ -92,7 +93,7 @@ class CompanyExpenseController extends Controller
     {
         //dd($companyExpense->toArray());
         $request->validate([
-            'employee_id' => 'required',
+            //'employee_id' => 'required',
             'item' => 'required',
             'purchase_from' => 'required',
             'date_of_purchase' => 'required',

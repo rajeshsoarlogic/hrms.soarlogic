@@ -17,6 +17,9 @@ class AwardController extends Controller
     }
 
     public function processAward(Request $request){
+        $request->validate([
+            'name' => 'required',
+        ]);
 
         $award = new Award;
         $award->name = $request->name;

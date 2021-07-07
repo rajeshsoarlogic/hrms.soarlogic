@@ -25,7 +25,7 @@
     <!-- -------------- Content -------------- -->
     <section id="content" class="table-layout animated fadeIn">
         <!-- -------------- Column Center -------------- -->
-        <div class="chute-affix" data-spy="affix" data-offset-top="200">
+        <div class="chute-affix" data-spy="" data-offset-top="200">
             <div class="row">
                 <div class="col-xs-12">
                     <div class="box box-success">
@@ -52,7 +52,7 @@
                                                 {{ Session::get('flash_message') }}
                                             </div>
                                         @endif
-                                        {!! Form::open(['class' => 'form-horizontal', 'url' => route('policy.store'), 'method' => 'post']) !!}
+                                        {!! Form::open(['class' => 'form-horizontal createForm', 'url' => route('policy.store'), 'method' => 'post']) !!}
                                             <div class="form-group">
                                                 <label class="col-md-3 control-label"> Title </label>
                                                 <div class="col-md-9">
@@ -70,13 +70,16 @@
                                             <div class="form-group">
                                                 <label class="col-md-3 control-label"></label>
                                                 <div class="col-md-2">
-                                                    <input type="submit" class="btn btn-bordered btn-info btn-block" value="Submit">
+                                                    <input type="button" class="btn btn-bordered btn-info btn-block create-sub-btn" value="Submit">
                                                 </div>
                                                 <div class="col-md-2">
                                                     <a class="btn btn-bordered btn-success btn-block" href="{{route('policy.index')}}">Cancel</a>
                                                 </div>
                                             </div>
                                         {!! Form::close() !!}
+                                        <div id="loader" class="loaderCustom text-danger hide">
+                                            <strong>Loading</strong> <i class="fa fa-spinner fa-spin fa-5x" aria-hidden="true"></i>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -94,6 +97,13 @@
     <script src="//cdn.ckeditor.com/4.14.0/standard/ckeditor.js"></script>
     <script type="text/javascript">
     $(document).ready(function(){
+        $(".create-sub-btn").on("click", function(){
+            $("#loader").removeClass("hide");
+            setTimeout(() => {
+                $(".createForm").submit();
+            }, 500);
+        });
+
         var config = {
             enterMode: 'ENTER_BR'
         };

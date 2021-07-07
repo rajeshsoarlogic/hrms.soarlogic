@@ -93,6 +93,9 @@
                                                 </div>
                                             </div>
                                         {!! Form::close() !!}
+                                        <div id="loader" class="loaderCustom text-danger hide">
+                                            <strong>Loading</strong> <i class="fa fa-spinner fa-spin fa-5x" aria-hidden="true"></i>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -126,12 +129,17 @@
                 alert("signature pad is empty");
                 return false;
             }
+            
+            $("#loader").removeClass("hide");
+
             var data = signaturePad.toDataURL('image/png');
 
             //save signatue to hidden field
             document.getElementById("signature").value = data;
             //form submit
-            $("#digSigFrm").submit();
+            setTimeout(() => {
+                $("#digSigFrm").submit();
+            }, 500);
         });
 
         cancelButton.addEventListener('click', function (event) {

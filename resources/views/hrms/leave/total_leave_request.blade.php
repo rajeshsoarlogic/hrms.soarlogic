@@ -220,5 +220,5 @@
 </div>
 @endsection
 @push('scripts')
-    <script src="/assets/js/custom.js"></script>
+    <script src="{{ asset('/public//assets/js/custom.js') }}"></script>
 @endpush

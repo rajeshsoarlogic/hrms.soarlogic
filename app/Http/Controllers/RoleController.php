@@ -19,6 +19,10 @@ class RoleController extends Controller
 
     Public function processRole(Request $request)
     {
+        $request->validate([
+            'name' => 'required',
+        ]);
+
         //Role::create(['name' => $request->name, 'description' => $request->description]);
         $role = new Role;
         $role->name = $request->name;
@@ -26,7 +30,6 @@ class RoleController extends Controller
         $role->save();
         \Session::flash('flash_message', 'Role successfully added!');
         return redirect()->back();
-
     }
 
     public function showRole()

@@ -57,7 +57,7 @@ class CompanyDetailController extends Controller
         }
         CompanyDetail::create($companyInput);
 
-        return redirect()->route('company-detail.create')->with('flash_message', 'Company Detail successfully added!');
+        return redirect()->route('company-detail.index')->with('flash_message', 'Company Detail successfully added!');
     }
 
     /**

@@ -3,6 +3,8 @@
  */
 var datepicker1 = $('#datepicker1');
 var datepicker4 = $('#datepicker4');
+var getUrl = window.location;
+var baseUrl = getUrl .protocol + "//" + getUrl.host + "/" + getUrl.pathname.split('/')[1];
 
 datepicker4.on('change', function () {
     var date_from = datepicker1.val();

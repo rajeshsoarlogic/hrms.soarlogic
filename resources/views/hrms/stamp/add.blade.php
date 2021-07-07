@@ -1,7 +1,7 @@
 @extends('hrms.layouts.base')
 
 @section('content')
-        <!-- START CONTENT -->
+<!-- START CONTENT -->
 <div class="content">
 
     <header id="topbar" class="alt">
@@ -52,7 +52,7 @@
                                                 {{ Session::get('flash_message') }}
                                             </div>
                                         @endif
-                                        {!! Form::open(['class' => 'form-horizontal', 'url' => route('stamp.store'), 'method' => 'post', 'files' => true]) !!}
+                                        {!! Form::open(['class' => 'form-horizontal createForm', 'url' => route('stamp.store'), 'method' => 'post', 'files' => true, 'id' => 'stampFrm']) !!}
                                             <div class="form-group">
                                                 <label class="col-md-3 control-label"> Title </label>
                                                 <div class="col-md-6">
@@ -71,13 +71,16 @@
                                             <div class="form-group">
                                                 <label class="col-md-3 control-label"></label>
                                                 <div class="col-md-2">
-                                                    <input type="submit" class="btn btn-bordered btn-info btn-block" value="Submit">
+                                                    <input type="button" class="btn btn-bordered btn-info btn-block create-sub-btn" value="Submit">
                                                 </div>
                                                 <div class="col-md-2">
                                                     <input type="reset" class="btn btn-bordered btn-success btn-block" value="Reset">
                                                 </div>
                                             </div>
                                         {!! Form::close() !!}
+                                        <div id="loader" class="loaderCustom text-danger hide">
+                                            <strong>Loading</strong> <i class="fa fa-spinner fa-spin fa-5x" aria-hidden="true"></i>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -90,3 +93,16 @@
 
 </div>
 @endsection
+
+@push('scripts')
+    <script type="text/javascript">
+    $(document).ready(function(){
+        $(".create-sub-btn").on("click", function(){
+            $("#loader").removeClass("hide");
+            setTimeout(() => {
+                $(".createForm").submit();
+            }, 500);
+        });
+    });
+    </script>
+@endpush

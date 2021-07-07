@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use App\Appraisal;
@@ -94,7 +93,7 @@ class AppraisalController extends Controller
             $message->attach(asset('storage/app/appraisal/'.$pdf_name));
         });
 
-        return redirect()->route('appraisal.create')->with('flash_message', 'Appraisal Letter successfully added!');
+        return redirect()->route('appraisal.index')->with('flash_message', 'Appraisal Letter successfully added!');
     }
 
     /**

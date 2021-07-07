@@ -47,7 +47,7 @@ class TemplateController extends Controller
         $templateInput = $request->all();
         Template::create($templateInput);
 
-        return redirect()->route('template.create')->with('flash_message', 'Template successfully added!');
+        return redirect()->route('template.index')->with('flash_message', 'Template successfully added!');
     }
 
     /**

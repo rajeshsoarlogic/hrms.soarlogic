@@ -27,6 +27,9 @@ class AssetController extends Controller
      */
     Public function processAsset(Request $request)
     {
+        $request->validate([
+            'name' => 'required',
+        ]);
 
         $asset = new Asset;
         $asset->name = $request->name;

@@ -1,5 +1,12 @@
 @extends('hrms.layouts.base')
 
+<style>
+section#content li.active {
+    color: #666 !important;
+    background-color: #fefefe !important;
+}
+</style>
+
 @section('content')
         <!-- START CONTENT -->
 <div class="content">
@@ -39,12 +46,12 @@
                 <div class="tab-content pn br-n bg-none allcp-form-list">
 
                     <ul class="nav list-unstyled" role="tablist">
-
                         <li class="nav-label"> Employee Details </li>
                         <li>
-                            <a class="btn btn-primary btn-gradient btn-alt btn-block item-active br-n" href="#login"
-                               role="tab"
-                               data-toggle="tab"> Upload Sheet </a>
+                            <a class="btn btn-primary btn-gradient btn-alt btn-block br-n" href="#login" role="tab" data-toggle="tab"> Upload Sheet </a>
+                        </li>
+                        <li>
+                            <a class="btn btn-primary btn-gradient btn-alt btn-block br-n" href="#uploadZipSheet" role="tab" data-toggle="tab"> Upload Zip Sheet </a>
                         </li>
                     </ul>
 
@@ -59,10 +66,7 @@
         <!-- -------------- Column Center -------------- -->
         <div class="chute chute-center">
             <div class="">
-
                 <div class="tab-content mw900 center-block center-children">
-
-
                     <!-- -------------- Upload Form -------------- -->
                     <div class="allcp-form theme-primary tab-pane active mw320" id="login" role="tabpanel">
                         <div class="box box-success">
@@ -104,6 +108,38 @@
                     </div>
                     <!-- -------------- /Login Form -------------- -->
 
+                    <!-- -------------- Upload Form -------------- -->
+                    <div class="allcp-form theme-primary tab-pane mw320" id="uploadZipSheet" role="tabpanel">
+                        <div class="box box-success">
+                            <div class="panel fluid-width">
+                                @if(Session::has('success'))
+                                    <div class="alert alert-success">
+                                        {{ Session::get('success') }}
+                                    </div>
+                                @endif
+                                {!! Form::open(['class' => 'form-horizontal', 'url' => route('upload-emp-zip'), 'files' => true]) !!}
+                                <div class="panel-body pn mv12">
+                                    <div class="section">
+                                        <label for="file1"><h6 > Upload Zip File </h6></label>
+                                        <label class="field prepend-icon append-button file">
+                                            <span class="button">Choose File</span>
+                                            <input type="file" class="gui-file" name="upload_zip_file" id="zip_file">
+                                            <input type="text" class="gui-input" id="zip_uploader" placeholder="Select File">
+                                        </label>
+                                    </div>
+
+                                    <div class="section">
+                                        <input type="submit" class="btn btn-bordered btn-info btn-block" value="Submit">
+                                    </div>
+                                    <!-- -------------- /section -------------- -->
+                                </div>
+                                {!! Form::close() !!}
+                                <!-- -------------- /Form -------------- -->
+                            </div>
+                        </div>
+                        <!-- -------------- /Panel -------------- -->
+                    </div>
+                    <!-- -------------- /uploadZipSheet Form -------------- -->
                 </div>
 
             </div>

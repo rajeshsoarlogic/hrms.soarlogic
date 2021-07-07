@@ -55,7 +55,7 @@ class DigitalSignatureController extends Controller
         $decoded_image = base64_decode($encoded_image);
         Storage::disk('local')->put("signature/$sig_name", $decoded_image);
 
-        return redirect()->route('digital-sig.create')->with('flash_message', 'Signature successfully added!');
+        return redirect()->route('digital-sig.index')->with('flash_message', 'Signature successfully added!');
     }
 
     /**

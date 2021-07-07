@@ -56,7 +56,7 @@ class InvoiceController extends Controller
         $invoiceInput['invoice'] = basename($path);
         Invoice::create($invoiceInput);
 
-        return redirect()->route('invoice.create')->with('flash_message', 'Invoice successfully added!');
+        return redirect()->route('invoice.index')->with('flash_message', 'Invoice successfully added!');
     }
 
     /**

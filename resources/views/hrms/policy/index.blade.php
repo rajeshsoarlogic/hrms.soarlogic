@@ -59,13 +59,16 @@
                                         <tr>
                                             <td class="text-center">{{$i+=1}}</td>
                                             <td class="text-center">{{$policy->title}}</td>
-                                            <td class="text-center">{{strip_tags($policy->description)}}</td>
+                                            <td class="text-center">{{ substr(strip_tags($policy->description), 0, 250)}}...</td>
                                             <td class="text-center">
                                                 <div class="btn-group text-right">
                                                     <button type="button" class="btn btn-success br2 btn-xs fs12 dropdown-toggle" data-toggle="dropdown" aria-expanded="false"> Action
                                                         <span class="caret ml5"></span>
                                                     </button>
                                                     <ul class="dropdown-menu" role="menu">
+                                                        <li>
+                                                            <a href="{{ route('policy.show', $policy->id) }}">View</a>
+                                                        </li>
                                                         <li>
                                                             <a href="{{ route('policy.edit', $policy->id) }}">Edit</a>
                                                         </li>

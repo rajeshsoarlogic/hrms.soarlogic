@@ -49,7 +49,7 @@
                                         <thead>
                                         <tr class="bg-light">
                                             <th class="text-center">Id</th>
-                                            <th class="text-center">Employee</th>
+                                            <!-- <th class="text-center">Employee</th> -->
                                             <th class="text-center">Item</th>
                                             <th class="text-center">Purchase From</th>
                                             <th class="text-center">Date of Purchase</th>
@@ -62,7 +62,7 @@
                                         @foreach($expenses as $expense)
                                             <tr>
                                                 <td class="text-center">{{$i+=1}}</td>
-                                                <td class="text-center">{{$expense->employee->name}}</td>
+                                                <!-- <td class="text-center">{{-- $expense->employee->name --}}</td> -->
                                                 <td class="text-center">{{$expense->item}}</td>
                                                 <td class="text-center">{{$expense->purchase_from}}</td>
                                                 <td class="text-center">{{getFormattedDate($expense->date_of_purchase)}}</td>

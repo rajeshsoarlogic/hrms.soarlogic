@@ -80,7 +80,7 @@ class SalaryslipController extends Controller
         $pdf = PDF::loadView('pdf.salaryslip', ['request' => $salaryslip, 'designation' => $designation]);
         Storage::put("salaryslip/$pdf_name", $pdf->output());
 
-        return redirect()->route('salaryslip.create')->with('flash_message', 'Salaryslip successfully added!');
+        return redirect()->route('salaryslip.index')->with('flash_message', 'Salaryslip successfully added!');
     }
 
     /**

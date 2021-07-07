@@ -54,17 +54,17 @@
                                             </div>
                                         @endif
                                         {!! Form::open(['class' => 'form-horizontal', 'url' => route('company-expense.update', $companyExpense->id), 'method' => 'put']) !!}
-                                        <div class="form-group">
+                                        <!-- <div class="form-group">
                                             <label class="col-md-3 control-label"> Select Employee </label>
                                             <div class="col-md-6">
                                                 <select class="select2-multiple form-control select-primary" name="employee_id" id="employee_id" required>
                                                     <option value="" selected>Select One</option>
-                                                    @foreach($emps as $emp)
+                                                    {{-- @foreach($emps as $emp)
                                                         <option value="{{$emp->id}}" @if($emp->id == $companyExpense->employee_id) selected @endif>{{$emp->name}}</option>
-                                                    @endforeach
+                                                    @endforeach --}}
                                                 </select>
                                             </div>
-                                        </div>
+                                        </div> -->
 
                                         <div class="form-group">
                                             <label for="item" class="col-md-3 control-label"> Item </label>

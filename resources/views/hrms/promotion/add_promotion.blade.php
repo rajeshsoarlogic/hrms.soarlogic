@@ -27,7 +27,7 @@
         <!-- -------------- Content -------------- -->
         <section id="content" class="table-layout animated fadeIn" >
             <!-- -------------- Column Center -------------- -->
-            <div class="chute-affix" data-spy="affix" data-offset-top="200">
+            <div class="chute-affix" data-offset-top="200">
                 <div class="row">
                     <div class="col-xs-12">
                         <div class="box box-success">
@@ -39,17 +39,26 @@
                                 <div class="panel-body pn">
                                     <div class="table-responsive">
                                         <div class="panel-body p25 pb10">
+                                            @if ($errors->any())
+                                                <div class="alert alert-danger">
+                                                    <ul>
+                                                        @foreach ($errors->all() as $error)
+                                                            <li>{{ $error }}</li>
+                                                        @endforeach
+                                                    </ul>
+                                                </div>
+                                            @endif
+                                            
                                             @if(Session::has('flash_message'))
                                                 <div class="alert alert-success">
                                                     {{Session::get('flash_message')}}
                                                 </div>
                                             @endif
-                                            {!! Form::open(['class' => 'form-horizontal']) !!}
+                                            {!! Form::open(['class' => 'form-horizontal createForm']) !!}
                                             <div class="form-group">
                                                 <label class="col-md-3 control-label"> Select Employee </label>
                                                 <div class="col-md-6">
-                                                    <select class="select2-single form-control select-primary"
-                                                            name="emp_id" id="promotion_emp_id" required>
+                                                    <select class="select2-single form-control select-primary" name="emp_id" id="promotion_emp_id" required>
                                                         <option value="" selected>Select One</option>
                                                         @foreach($emps as $emp)
                                                             <option value="{{$emp->id}}">{{$emp->name}}</option>
@@ -58,47 +67,40 @@
                                                 </div>
                                             </div>
 
-                                                <div class="form-group">
-                                                    <label class="col-md-3 control-label"> Old Designation </label>
-                                                    <div class="col-md-6">
-                                                            <input type="text" id="old_designation" class="form-control" name="old_designation" readonly required>
-                                                    </div>
+                                            <div class="form-group">
+                                                <label class="col-md-3 control-label"> Old Designation </label>
+                                                <div class="col-md-6">
+                                                        <input type="text" id="old_designation" class="form-control" name="old_designation" readonly required>
                                                 </div>
-
-
+                                            </div>
 
                                             <div class="form-group">
                                                 <label class="col-md-3 control-label"> Select New Designation </label>
                                                 <div class="col-md-6">
-                                                    <select class="select2-multiple
-                                                    form-control select-primary"
-                                                            name="new_designation" required>
+                                                    <select class="select2-multiple form-control select-primary" name="new_designation" required>
                                                         <option value="" selected>Select One</option>
                                                         @foreach($roles as $role)
                                                             <option value="{{$role->id}}">{{$role->name}}</option>
                                                         @endforeach
-
                                                     </select>
                                                 </div>
                                             </div>
 
-
-                                                <div class="form-group">
-                                                    <label for="datepicker1" class="col-md-3 control-label"> Old Salary </label>
-                                                    <div class="col-md-6">
-                                                            <input type="text" id="old_salary" class="form-control" name="old_salary" readonly required>
-                                                    </div>
+                                            <div class="form-group">
+                                                <label for="datepicker1" class="col-md-3 control-label"> Old Salary </label>
+                                                <div class="col-md-6">
+                                                    <input type="text" id="old_salary" class="form-control" name="old_salary" readonly required>
                                                 </div>
+                                            </div>
 
-                                                <div class="form-group">
-                                                    <label for="datepicker1" class="col-md-3 control-label">Enter New Salary </label>
-                                                    <div class="col-md-6">
-                                                            <input type="text" id="new_salary" class="form-control" name="new_salary" required>
-                                                    </div>
+                                            <div class="form-group">
+                                                <label for="datepicker1" class="col-md-3 control-label">Enter New Salary </label>
+                                                <div class="col-md-6">
+                                                    <input type="text" id="new_salary" class="form-control" name="new_salary" required>
                                                 </div>
+                                            </div>
 
-
-                                                <div class="form-group">
+                                            <div class="form-group">
                                                 <label for="datepicker1" class="col-md-3 control-label"> Date of Promotion </label>
                                                 <div class="col-md-6">
                                                     <div class="input-group">
@@ -110,19 +112,19 @@
                                                 </div>
                                             </div>
 
-
                                             <div class="form-group">
                                                 <label class="col-md-3 control-label"></label>
                                                 <div class="col-md-2">
-
-                                                    <input type="submit" class="btn btn-bordered btn-info btn-block" value="Submit">
+                                                    <input type="button" class="btn btn-bordered btn-info btn-block create-sub-btn" value="Submit">
                                                 </div>
                                                 <div class="col-md-2"><a href="/promotion" >
                                                         <input type="button" class="btn btn-bordered btn-success btn-block" value="Reset"></a></div>
                                             </div>
                                         </div>
-
                                         {!! Form::close() !!}
+                                        <div id="loader" class="loaderCustom text-danger hide">
+                                            <strong>Loading</strong> <i class="fa fa-spinner fa-spin fa-5x" aria-hidden="true"></i>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -136,6 +138,17 @@
     </div>
 @endsection
 @push('scripts')
-    <script src="/assets/js/pages/forms-widgets.js"></script>
-    <script src="/assets/js/custom.js"></script>
+    <script type="text/javascript">
+    $(document).ready(function(){
+        $(".create-sub-btn").on("click", function(){
+            $("#loader").removeClass("hide");
+            setTimeout(() => {
+                $(".createForm").submit();
+            }, 500);
+        });
+    });
+    </script>
+    <script src="{{ asset('/public/assets/js/pages/forms-widgets.js') }}"></script>
+    <script src="{{ asset('/public/assets/js/custom.js') }}"></script>
+    
 @endpush
